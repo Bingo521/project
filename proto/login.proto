@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+message LoginRequest {
+    string code = 1;
+}
+
+message LoginResponse {
+    int32 status_code = 1;
+    string message = 2;
+    string openid = 3;
+    string session_key = 4;
+}
