@@ -1,0 +1,28 @@
+package redis
+
+import (
+	"my_project/logs"
+)
+
+func Get(key string)(string,error){
+	resp,err:=RedisClient.Do("get",key)
+	if err != nil{
+		return "",err
+	}
+	str,ok:=resp.([]byte)
+	if !ok{
+		logs.Error("resp = %v is not string type!",resp)
+		return "",err
+	}
+	return string(str),nil
+}
+
+func Set(key string,val string)error{
+	_,err:=RedisClient.Do("set",key,val)
+	return err
+}
+
+func SetTimeOut(key string,second int64)error{
+	_,err:=RedisClient.Do("expire", key, second)
+	return err
+}

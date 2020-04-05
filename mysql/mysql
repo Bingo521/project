@@ -1,0 +1,38 @@
+create table school(
+id int AUTO_INCREMENT,
+school_name VARCHAR(100),
+PRIMARY KEY ( `id` ),
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+insert into school values(NULL,"亳州学院");
+
+create table class_record(
+open_id varchar(50),
+school_name varchar(100),
+week int,
+time bigint,
+class TEXT
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+create table user(
+open_id  varchar(50),
+cur_school_name varchar(100),
+phone_num varchar(13),
+wx_num varchar(50),
+name varchar(50),
+sex int,
+extra text,
+primary key(open_id),
+key `idx_school` (`open_id`,`cur_school_name`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+create table stu_school(
+open_id varchar(50),
+school_name varchar(100),
+stu_id varchar(30),
+stu_password varchar(50),
+first_week_date date,
+extra text,
+primary key(`open_id`,`school_name`,`stu_id`),
+key `idx_shcool_stu` (`open_id`,`school_name`,`stu_id`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;

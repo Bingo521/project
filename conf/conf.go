@@ -7,10 +7,11 @@ import (
 
 var Conf *model.Config
 var confPath = "conf/conf.yml"
-func init(){
+
+func init() {
 	var err error
-	Conf,err=util.ReadYamlFile(confPath)
-	if err != nil{
-		panic("load conf err")
+	Conf, err = util.ReadYamlFile(confPath)
+	if err != nil {
+		panic(err)
 	}
 }

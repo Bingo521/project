@@ -6,13 +6,20 @@ import (
 	"os"
 )
 
-func ReadYamlFile(path string)(*model.Config,error){
+func ReadYamlFile(path string) (*model.Config, error) {
 	conf := &model.Config{}
 	if f, err := os.Open(path); err != nil {
-		return nil,err
+		return nil, err
 	} else {
 		yaml.NewDecoder(f).Decode(conf)
 	}
-	return  conf,nil
+	return conf, nil
 }
 
+
+func MakeErrResp(errCode int32,message string)*model.ErrResp{
+	return &model.ErrResp{
+		StatusCode:errCode,
+		Message: message,
+	}
+}

@@ -20,8 +20,10 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
+// path = "/login"
+//身份验证请求
 type LoginRequest struct {
-	Code                 string   `protobuf:"bytes,1,opt,name=code,proto3" json:"code"`
+	Code                 string   `protobuf:"bytes,1,opt,name=code,proto3" json:"code,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -59,11 +61,12 @@ func (m *LoginRequest) GetCode() string {
 	return ""
 }
 
+//身份验证响应
 type LoginResponse struct {
-	StatusCode           int32    `protobuf:"varint,1,opt,name=status_code,json=statusCode,proto3" json:"status_code"`
-	Message              string   `protobuf:"bytes,2,opt,name=message,proto3" json:"message"`
-	Openid               string   `protobuf:"bytes,3,opt,name=openid,proto3" json:"openid"`
-	SessionKey           string   `protobuf:"bytes,4,opt,name=session_key,json=sessionKey,proto3" json:"session_key"`
+	StatusCode           int32    `protobuf:"varint,1,opt,name=status_code,json=statusCode,proto3" json:"status_code,omitempty"`
+	Message              string   `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	Openid               string   `protobuf:"bytes,3,opt,name=openid,proto3" json:"openid,omitempty"`
+	SessionKey           string   `protobuf:"bytes,4,opt,name=session_key,json=sessionKey,proto3" json:"session_key,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`

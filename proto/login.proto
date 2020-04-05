@@ -1,12 +1,15 @@
 syntax = "proto3";
 
+// path = "/login"
+//身份验证请求
 message LoginRequest {
     string code = 1;
 }
 
+//身份验证响应
 message LoginResponse {
-    int32 status_code = 1;
-    string message = 2;
-    string openid = 3;
-    string session_key = 4;
+    int32 status_code = 1; //状态码，0是成功，其它是错误码
+    string message = 2; // 错误信息，0时为success
+    string openid = 3; // 身份id
+    string session_key = 4; //session
 }
