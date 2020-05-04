@@ -49,6 +49,23 @@ var funcArr = []*Handler{
 		Path: "/get_course/by_week",
 		Func: GetCourseByWeek,
 	},
+	&Handler{
+		Type: ANY,
+		Path: "/set_school/verify_code",
+		Func: GetVerifyCode,
+	},&Handler{
+		Type: POST,
+		Path: "/upload/image",
+		Func: UploadImage,
+	},&Handler{
+		Type: POST,
+		Path: "/create/message",
+		Func: CreateMessage,
+	},&Handler{
+		Type: GET,
+		Path: "/get/self_message",
+		Func: GetSelfMessage,
+	},
 }
 
 func Bind(r *gin.Engine) {
@@ -62,6 +79,7 @@ func Bind(r *gin.Engine) {
 			r.POST(handler.Path, handler.Func)
 		}
 	}
+	r.Static("source/image/origin","./source/image/origin")
 }
 
 func Ping(c *gin.Context) {
@@ -94,4 +112,25 @@ func GetCurCourse(c *gin.Context){
 func GetCourseByWeek(c * gin.Context){
 	h := handler.NewGetCourseByWeekNumHandler(c)
 	c.JSON(200,h.Execute())
+}
+
+func GetVerifyCode(c *gin.Context){
+	h := handler.NewGetVerifyCodeHandler(c)
+	c.JSON(200,h.Execute())
+}
+
+func UploadImage(c *gin.Context){
+	h := handler.NewImageHandler(c)
+	c.JSON(200,h.Execute())
+}
+
+func CreateMessage(c *gin.Context){
+	h := handler.NewMessageHandler(c)
+	c.JSON(200,h.Execute())
+}
+
+func GetSelfMessage(c *gin.Context){
+	h:= handler.NewMessageHandler(c)
+	c.JSON(200,h.Execute())
+
 }

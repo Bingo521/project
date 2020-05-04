@@ -6,12 +6,13 @@ import (
 	"my_project/error_code"
 	"my_project/logs"
 	"my_project/util"
+	"strings"
 )
 
 func CheckLogin() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		path := c.FullPath()
-		if path == "/login" {
+		if path == "/login" || strings.Contains(path,"/source"){
 			c.Next()
 			return
 		}

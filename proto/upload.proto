@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+//上传图片。类似于表单上传
+// POST /upload/image
+
+message UploadImageRequest {
+    bytes image = 1;
+}
+
+message UploadImageResponse {
+     int32 status_code = 1; //状态码，0是成功，其它是错误码
+     string message = 2; // 错误信息，0时为success
+     string uri = 3;//图片uri
+     string url = 4;//图片url
+}

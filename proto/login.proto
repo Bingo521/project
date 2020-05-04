@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-// path = "/login"
+// POST /login
 //身份验证请求
 message LoginRequest {
     string code = 1;

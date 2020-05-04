@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"my_project/class_schdule"
 	"my_project/dal/db"
 	"my_project/error_code"
 	"my_project/logs"
@@ -36,11 +37,51 @@ func (h *SetSchoolHandler)Execute()*class_schedule.SetSchoolsResponse{
 		logs.Error("SetSchoolHandler Execute err = %v",err)
 		return h.resp
 	}
-	err:=db.SetSchool(h.comm.OpenId,h.req.SchoolName)
+	courseLoader:=class_schdule.NewClassSchduler(h.comm.OpenId,h.req.SchoolName,h.req.StuId,h.req.StuPassword,h.req.VerifyCode)
+	if courseLoader == nil{
+		h.resp.StatusCode = error_code.ERR_PARAM_ILLEGAL
+		h.resp.Message = "param illegal"
+		h.resp.AlertMessage = "暂不支持该学校"
+		return h.resp
+	}
+	err:=courseLoader.Load()
+	if err != nil{
+		logs.Error("load course failed!err = %v",err)
+		h.resp.StatusCode = error_code.ERR_SERVER_ERR
+		h.resp.Message = error_code.SYS_MESSAGE_SERVER_ERR
+		h.resp.AlertMessage = courseLoader.GetErrorInfo()
+		return h.resp
+	}
+	courses,err:=courseLoader.GetCourse()
+	if err != nil{
+		logs.Error("GetCourse failed err = %v",err)
+		h.resp.StatusCode = error_code.ERR_SERVER_ERR
+		h.resp.Message = error_code.SYS_MESSAGE_SERVER_ERR
+		h.resp.AlertMessage = courseLoader.GetErrorInfo()
+		return h.resp
+	}
+	err =h.saveCourse(courses)
+	if err != nil{
+		logs.Error("GetCourse failed err = %v",err)
+		h.resp.StatusCode = error_code.ERR_SERVER_ERR
+		h.resp.Message = "service err"
+		h.resp.AlertMessage = "服务异常"
+		return h.resp
+	}
+	err = db.SetSchool(h.comm.OpenId,h.req.SchoolName)
 	if err != nil{
 		logs.Error("set school err open_id = %v,err=%v",h.comm.OpenId,err)
 		h.resp.StatusCode = error_code.ERR_SERVER_ERR
 		h.resp.Message = "service err"
+		h.resp.AlertMessage = "服务异常"
+		return h.resp
+	}
+	err = db.SetStuSchool(h.comm.OpenId,h.req.SchoolName,h.req.StuId,h.req.StuPassword,courseLoader.GetFirsetWeekData())
+	if err != nil{
+		logs.Error("SetStuSchool err = %v",err)
+		h.resp.StatusCode = error_code.ERR_SERVER_ERR
+		h.resp.Message = "service err"
+		h.resp.AlertMessage = "服务异常"
 		return h.resp
 	}
 	return h.resp
@@ -68,10 +109,37 @@ func (h *SetSchoolHandler)Check()error{
 
 func genSetSchoolHandlerReq(c *gin.Context)(*class_schedule.SetSchoolsRequest){
 	school:=c.PostForm("school")
-	if school == ""{
+	if school == "" {
+		return nil
+	}
+	stuId := c.PostForm("stu_id")
+	if stuId == ""{
+		return nil
+	}
+	stuPassword := c.PostForm("stu_password")
+	if stuPassword == ""{
+		return nil
+	}
+	code := c.PostForm("code")
+	if code == ""{
 		return nil
 	}
 	return &class_schedule.SetSchoolsRequest{
 		SchoolName: school,
+		StuId: stuId,
+		StuPassword: stuPassword,
+		VerifyCode: code,
 	}
+}
+
+func (h *SetSchoolHandler)saveCourse(courses [][][]*model.ClassInfo)error{
+	for i,course := range courses{
+		err:=util.Retry(func() error {
+			return db.SetCourse(h.comm.OpenId,h.req.SchoolName,h.req.StuId,i,course)
+		},3)
+		if err != nil{
+			return err
+		}
+	}
+	return nil
 }

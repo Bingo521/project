@@ -1,6 +1,7 @@
 package redis
 
 import (
+	"github.com/garyburd/redigo/redis"
 	"my_project/logs"
 )
 
@@ -25,4 +26,13 @@ func Set(key string,val string)error{
 func SetTimeOut(key string,second int64)error{
 	_,err:=RedisClient.Do("expire", key, second)
 	return err
+}
+
+func Inc(key string)(int64,error){
+	RedisClient.Do("")
+	v, err := redis.Int64(RedisClient.Do("INCR", key))
+	if err != nil{
+		return 0,err
+	}
+	return v,nil
 }

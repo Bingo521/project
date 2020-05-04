@@ -36,3 +36,24 @@ extra text,
 primary key(`open_id`,`school_name`,`stu_id`),
 key `idx_shcool_stu` (`open_id`,`school_name`,`stu_id`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+create table image_uri (
+uri varchar(20),
+type varchar(10),
+extra text,
+primary key(`uri`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+create table message(
+    message_id int(64),
+    open_id varchar(50),
+    type int,
+    message text,
+    image_uris text,
+    create_time DATETIME,
+    modify_time DATETIME,
+    extra text,
+    primary key(`message_id`),
+    key `idx_open_id` (`open_id`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;

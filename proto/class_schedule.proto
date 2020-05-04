@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-// path = "/get_school"
+// GET /get_school
 //支持哪些学校
 message GetSchoolsResponse {
     int32 status_code = 1;
@@ -8,10 +8,13 @@ message GetSchoolsResponse {
     repeated string schools = 3; //支持哪些学校
 }
 
-// path = "/set_school"
+// POST /set_school
 //设置自己的学校
 message SetSchoolsRequest {
     string school_name = 1;
+    string stu_id = 2;//学号
+    string stu_password = 3;//教务在线密码
+    string verify_code = 4;//验证码
 }
 
 message SetSchoolsResponse {
@@ -36,7 +39,7 @@ message Course {
     string course_name = 3;
     string teacher_name = 4;
 }
-// path = "/get_course/current"
+// GET /get_course/current
 //获取当前课程表
 
 message GetCurClassResponse {
@@ -49,7 +52,7 @@ message GetCurClassResponse {
 
 }
 
-// path = "/get_course/by_week"
+// GET /get_course/by_week
 // 获取第week周的课程表
 message GetCourseByWeekNumRequest {
     string school_name = 1;//学校名
@@ -63,4 +66,30 @@ message GetCourseByWeekNumResponse{
     string school_name = 4;
     int32 week = 5; //这是第几周的课
     repeated Course courses = 6;//这周的所有课
+}
+
+// GET /set_school/verify_code
+//获取图片验证码
+
+message GetVerifyCodeRequest {
+    string school_name = 1;
+}
+
+message GetVerifyCodeResponse {
+    int32 status_code = 1;
+    string message = 2;
+    string url = 3;
+}
+
+
+// POST /set_course/cur_week
+//设置当前周
+
+message SetCurWeekRequest {
+    int32 week = 1;
+}
+
+message SetCurWeekResponse {
+     int32 status_code = 1;
+     string message = 2;
 }

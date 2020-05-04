@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+//创建消息
+// POST /create/message
+message CreateMessageRequest {
+    string content = 1;//文本内容
+    repeated string uris = 2;//图片信息
+}
+
+message CreateMessageResponse {
+     int32 status_code = 1; //状态码，0是成功，其它是错误码
+     string message = 2; // 错误信息，0时为success
+     int64 message_id = 3; //消息id
+     string content = 4;//文本内容
+     repeated string uris = 5;//图片信息
+     int64 create_time = 6;//创建时间
+}
+
+
+//获取自己的消息
+
+// GET /get/self_message
+message GetSelfMessageRequest {
+    int64 index = 1;//从第几个开始
+    int64 count = 2;//获取多少个
+    int32 message_type = 3;// 获取哪种消息 1:thread
+}
+
+message MessageInfo {
+     int64 message_id = 1;//消息id
+     string content = 2; // 文本信息
+     repeated string urls = 3;//图片信息
+     int64 create_time = 4;//创建时间
+}
+
+message GetSelfMessageResonse {
+     int32 status_code = 1; //状态码，0是成功，其它是错误码
+     string message = 2; // 错误信息，0时为success
+     repeated MessageInfo message_infos = 3;
+     int64 count = 4;//获取了多少个
+     bool has_more = 5;//是否还有
+}
