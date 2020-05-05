@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-//上传图片。类似于表单上传
+//上传图片。类似于表单上传,发布帖子前，先要上传图片，然后发布时，用发布时的uri，只支持单张上传。
 // POST /upload/image
 
 message UploadImageRequest {

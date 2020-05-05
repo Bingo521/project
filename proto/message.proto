@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-//创建消息
+//创建帖子
 // POST /create/message
 message CreateMessageRequest {
     string content = 1;//文本内容
@@ -17,7 +17,7 @@ message CreateMessageResponse {
 }
 
 
-//获取自己的消息
+//获取自己的帖子
 
 // GET /get/self_message
 message GetSelfMessageRequest {

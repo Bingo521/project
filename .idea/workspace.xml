@@ -3,13 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="89692903-a79d-4e92-8b88-42721aec7c83" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bind.go" beforeDir="false" afterPath="$PROJECT_DIR$/bind.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dal/db/init.go" beforeDir="false" afterPath="$PROJECT_DIR$/dal/db/init.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dal/db/message.go" beforeDir="false" afterPath="$PROJECT_DIR$/dal/db/message.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/handler/get_self_message.go" beforeDir="false" afterPath="$PROJECT_DIR$/handler/get_self_message.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/handler/message.go" beforeDir="false" afterPath="$PROJECT_DIR$/handler/message.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/handler/upload.go" beforeDir="false" afterPath="$PROJECT_DIR$/handler/upload.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/db_message.go" beforeDir="false" afterPath="$PROJECT_DIR$/model/db_message.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
