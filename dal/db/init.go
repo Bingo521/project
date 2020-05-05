@@ -11,7 +11,7 @@ import (
 var (
 	db *gorm.DB
 )
-var localKey = "root:bing1120@tcp(127.0.0.1:3306)/app?charset=utf8"
+var localKey = "root:bing1120@tcp(127.0.0.1:3306)/app?charset=utf8&parseTime=true"
 
 func getRemoteKey() string {
 	mysql := conf.Conf.GetMysql()

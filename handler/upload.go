@@ -77,5 +77,5 @@ func checkImgType(imgType string)bool{
 }
 
 func imageOrigin(imageName string)string{
-	return "/source/image/origin/"+imageName
+	return "source/image/origin/"+imageName
 }

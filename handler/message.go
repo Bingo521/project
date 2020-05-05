@@ -63,7 +63,7 @@ func (h *MessageHandler)Execute()*message.CreateMessageResponse{
 	resp.Content = h.req.Content
 	resp.Uris = h.req.Uris
 	resp.MessageId = mId
-	resp.CreateTime = mess.CreateTime
+	resp.CreateTime = mess.CreateTime.Unix()
 	return &resp
 }
 

@@ -9,6 +9,7 @@ import (
 	"my_project/model"
 	"my_project/proto_gen/message"
 	"my_project/util"
+	"strconv"
 )
 
 type GetSelfMessageHandler struct {
@@ -61,10 +62,10 @@ func (h * GetSelfMessageHandler)Execute()*message.GetSelfMessageResonse{
 			continue
 		}
 		for i,uri := range uris{
-			uris[i] = "http://cmyk-so.com/"+imageOrigin(uri)
+			uris[i] = "https://cmyk-so.com/"+imageOrigin(uri)
 		}
 		messInfo.Urls = uris
-		messInfo.CreateTime = mess.CreateTime
+		messInfo.CreateTime = mess.CreateTime.Unix()
 		messInfos = append(messInfos, messInfo)
 	}
 	resp.MessageInfos = messInfos
@@ -77,9 +78,20 @@ func (h *GetSelfMessageHandler)getReq()*message.GetSelfMessageRequest{
 	if h.c == nil{
 		return nil
 	}
-	index := h.c.GetInt64("index")
-	count := h.c.GetInt64("count")
-	logs.Info("index = %v,count = %v",index,count)
+	strIndex := h.c.Query("index")
+	strCount := h.c.Query("count")
+	logs.Info("index = %v,count = %v",strIndex,strCount)
+	if strIndex == "" || strCount == ""{
+		return nil
+	}
+	index ,err := strconv.ParseInt(strIndex,10,64)
+	if err != nil{
+		return nil
+	}
+	count,err := strconv.ParseInt(strCount,10,64)
+	if err != nil{
+		return nil
+	}
 	if count == 0{
 		return nil
 	}

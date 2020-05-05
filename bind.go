@@ -130,7 +130,6 @@ func CreateMessage(c *gin.Context){
 }
 
 func GetSelfMessage(c *gin.Context){
-	h:= handler.NewMessageHandler(c)
+	h:= handler.NewGetSelfMessageHandler(c)
 	c.JSON(200,h.Execute())
-
 }
