@@ -63,9 +63,9 @@ func (Week) EnumDescriptor() ([]byte, []int) {
 // path = "/get_school" GET
 //支持哪些学校
 type GetSchoolsResponse struct {
-	StatusCode           int32    `protobuf:"varint,1,opt,name=status_code,json=statusCode,proto3" json:"status_code,omitempty"`
-	Message              string   `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
-	Schools              []string `protobuf:"bytes,3,rep,name=schools,proto3" json:"schools,omitempty"`
+	StatusCode           int32    `protobuf:"varint,1,opt,name=status_code,json=statusCode,proto3" json:"status_code"`
+	Message              string   `protobuf:"bytes,2,opt,name=message,proto3" json:"message"`
+	Schools              []string `protobuf:"bytes,3,rep,name=schools,proto3" json:"schools"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -120,10 +120,10 @@ func (m *GetSchoolsResponse) GetSchools() []string {
 // path = "/set_school" POST
 //设置自己的学校
 type SetSchoolsRequest struct {
-	SchoolName           string   `protobuf:"bytes,1,opt,name=school_name,json=schoolName,proto3" json:"school_name,omitempty"`
-	StuId                string   `protobuf:"bytes,2,opt,name=stu_id,json=stuId,proto3" json:"stu_id,omitempty"`
-	StuPassword          string   `protobuf:"bytes,3,opt,name=stu_password,json=stuPassword,proto3" json:"stu_password,omitempty"`
-	VerifyCode           string   `protobuf:"bytes,4,opt,name=verify_code,json=verifyCode,proto3" json:"verify_code,omitempty"`
+	SchoolName           string   `protobuf:"bytes,1,opt,name=school_name,json=schoolName,proto3" json:"school_name"`
+	StuId                string   `protobuf:"bytes,2,opt,name=stu_id,json=stuId,proto3" json:"stu_id"`
+	StuPassword          string   `protobuf:"bytes,3,opt,name=stu_password,json=stuPassword,proto3" json:"stu_password"`
+	VerifyCode           string   `protobuf:"bytes,4,opt,name=verify_code,json=verifyCode,proto3" json:"verify_code"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -183,9 +183,9 @@ func (m *SetSchoolsRequest) GetVerifyCode() string {
 }
 
 type SetSchoolsResponse struct {
-	StatusCode           int32    `protobuf:"varint,1,opt,name=status_code,json=statusCode,proto3" json:"status_code,omitempty"`
-	Message              string   `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
-	AlertMessage         string   `protobuf:"bytes,3,opt,name=alert_message,json=alertMessage,proto3" json:"alert_message,omitempty"`
+	StatusCode           int32    `protobuf:"varint,1,opt,name=status_code,json=statusCode,proto3" json:"status_code"`
+	Message              string   `protobuf:"bytes,2,opt,name=message,proto3" json:"message"`
+	AlertMessage         string   `protobuf:"bytes,3,opt,name=alert_message,json=alertMessage,proto3" json:"alert_message"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -238,10 +238,10 @@ func (m *SetSchoolsResponse) GetAlertMessage() string {
 }
 
 type Course struct {
-	WeekNum              Week     `protobuf:"varint,1,opt,name=week_num,json=weekNum,proto3,enum=Week" json:"week_num,omitempty"`
-	ClassNum             int32    `protobuf:"varint,2,opt,name=class_num,json=classNum,proto3" json:"class_num,omitempty"`
-	CourseName           string   `protobuf:"bytes,3,opt,name=course_name,json=courseName,proto3" json:"course_name,omitempty"`
-	TeacherName          string   `protobuf:"bytes,4,opt,name=teacher_name,json=teacherName,proto3" json:"teacher_name,omitempty"`
+	WeekNum              Week     `protobuf:"varint,1,opt,name=week_num,json=weekNum,proto3,enum=Week" json:"week_num"`
+	ClassNum             int32    `protobuf:"varint,2,opt,name=class_num,json=classNum,proto3" json:"class_num"`
+	CourseName           string   `protobuf:"bytes,3,opt,name=course_name,json=courseName,proto3" json:"course_name"`
+	TeacherName          string   `protobuf:"bytes,4,opt,name=teacher_name,json=teacherName,proto3" json:"teacher_name"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -301,12 +301,12 @@ func (m *Course) GetTeacherName() string {
 }
 
 type GetCurClassResponse struct {
-	StatusCode           int32     `protobuf:"varint,1,opt,name=status_code,json=statusCode,proto3" json:"status_code,omitempty"`
-	Message              string    `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
-	AlertMessage         string    `protobuf:"bytes,3,opt,name=alert_message,json=alertMessage,proto3" json:"alert_message,omitempty"`
-	SchoolName           string    `protobuf:"bytes,4,opt,name=school_name,json=schoolName,proto3" json:"school_name,omitempty"`
-	Week                 int32     `protobuf:"varint,5,opt,name=week,proto3" json:"week,omitempty"`
-	Courses              []*Course `protobuf:"bytes,6,rep,name=courses,proto3" json:"courses,omitempty"`
+	StatusCode           int32     `protobuf:"varint,1,opt,name=status_code,json=statusCode,proto3" json:"status_code"`
+	Message              string    `protobuf:"bytes,2,opt,name=message,proto3" json:"message"`
+	AlertMessage         string    `protobuf:"bytes,3,opt,name=alert_message,json=alertMessage,proto3" json:"alert_message"`
+	SchoolName           string    `protobuf:"bytes,4,opt,name=school_name,json=schoolName,proto3" json:"school_name"`
+	Week                 int32     `protobuf:"varint,5,opt,name=week,proto3" json:"week"`
+	Courses              []*Course `protobuf:"bytes,6,rep,name=courses,proto3" json:"courses"`
 	XXX_NoUnkeyedLiteral struct{}  `json:"-"`
 	XXX_unrecognized     []byte    `json:"-"`
 	XXX_sizecache        int32     `json:"-"`
@@ -382,8 +382,8 @@ func (m *GetCurClassResponse) GetCourses() []*Course {
 // path = "/get_course/by_week" GET
 // 获取第week周的课程表
 type GetCourseByWeekNumRequest struct {
-	SchoolName           string   `protobuf:"bytes,1,opt,name=school_name,json=schoolName,proto3" json:"school_name,omitempty"`
-	Week                 int32    `protobuf:"varint,2,opt,name=week,proto3" json:"week,omitempty"`
+	SchoolName           string   `protobuf:"bytes,1,opt,name=school_name,json=schoolName,proto3" json:"school_name"`
+	Week                 int32    `protobuf:"varint,2,opt,name=week,proto3" json:"week"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -429,12 +429,12 @@ func (m *GetCourseByWeekNumRequest) GetWeek() int32 {
 }
 
 type GetCourseByWeekNumResponse struct {
-	StatusCode           int32     `protobuf:"varint,1,opt,name=status_code,json=statusCode,proto3" json:"status_code,omitempty"`
-	Message              string    `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
-	AlertMessage         string    `protobuf:"bytes,3,opt,name=alert_message,json=alertMessage,proto3" json:"alert_message,omitempty"`
-	SchoolName           string    `protobuf:"bytes,4,opt,name=school_name,json=schoolName,proto3" json:"school_name,omitempty"`
-	Week                 int32     `protobuf:"varint,5,opt,name=week,proto3" json:"week,omitempty"`
-	Courses              []*Course `protobuf:"bytes,6,rep,name=courses,proto3" json:"courses,omitempty"`
+	StatusCode           int32     `protobuf:"varint,1,opt,name=status_code,json=statusCode,proto3" json:"status_code"`
+	Message              string    `protobuf:"bytes,2,opt,name=message,proto3" json:"message"`
+	AlertMessage         string    `protobuf:"bytes,3,opt,name=alert_message,json=alertMessage,proto3" json:"alert_message"`
+	SchoolName           string    `protobuf:"bytes,4,opt,name=school_name,json=schoolName,proto3" json:"school_name"`
+	Week                 int32     `protobuf:"varint,5,opt,name=week,proto3" json:"week"`
+	Courses              []*Course `protobuf:"bytes,6,rep,name=courses,proto3" json:"courses"`
 	XXX_NoUnkeyedLiteral struct{}  `json:"-"`
 	XXX_unrecognized     []byte    `json:"-"`
 	XXX_sizecache        int32     `json:"-"`
@@ -508,7 +508,7 @@ func (m *GetCourseByWeekNumResponse) GetCourses() []*Course {
 }
 
 type GetVerifyCodeRequest struct {
-	SchoolName           string   `protobuf:"bytes,1,opt,name=school_name,json=schoolName,proto3" json:"school_name,omitempty"`
+	SchoolName           string   `protobuf:"bytes,1,opt,name=school_name,json=schoolName,proto3" json:"school_name"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -547,9 +547,9 @@ func (m *GetVerifyCodeRequest) GetSchoolName() string {
 }
 
 type GetVerifyCodeResponse struct {
-	StatusCode           int32    `protobuf:"varint,1,opt,name=status_code,json=statusCode,proto3" json:"status_code,omitempty"`
-	Message              string   `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
-	Url                  string   `protobuf:"bytes,3,opt,name=url,proto3" json:"url,omitempty"`
+	StatusCode           int32    `protobuf:"varint,1,opt,name=status_code,json=statusCode,proto3" json:"status_code"`
+	Message              string   `protobuf:"bytes,2,opt,name=message,proto3" json:"message"`
+	Url                  string   `protobuf:"bytes,3,opt,name=url,proto3" json:"url"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -602,7 +602,7 @@ func (m *GetVerifyCodeResponse) GetUrl() string {
 }
 
 type SetCurWeekRequest struct {
-	Week                 int32    `protobuf:"varint,1,opt,name=week,proto3" json:"week,omitempty"`
+	Week                 int32    `protobuf:"varint,1,opt,name=week,proto3" json:"week"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -641,8 +641,8 @@ func (m *SetCurWeekRequest) GetWeek() int32 {
 }
 
 type SetCurWeekResponse struct {
-	StatusCode           int32    `protobuf:"varint,1,opt,name=status_code,json=statusCode,proto3" json:"status_code,omitempty"`
-	Message              string   `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	StatusCode           int32    `protobuf:"varint,1,opt,name=status_code,json=statusCode,proto3" json:"status_code"`
+	Message              string   `protobuf:"bytes,2,opt,name=message,proto3" json:"message"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`

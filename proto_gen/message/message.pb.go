@@ -23,8 +23,8 @@ const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 //创建消息
 // POST /create/message
 type CreateMessageRequest struct {
-	Content              string   `protobuf:"bytes,1,opt,name=content,proto3" json:"content,omitempty"`
-	Uris                 []string `protobuf:"bytes,2,rep,name=uris,proto3" json:"uris,omitempty"`
+	Content              string   `protobuf:"bytes,1,opt,name=content,proto3" json:"content"`
+	Uris                 []string `protobuf:"bytes,2,rep,name=uris,proto3" json:"uris"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -70,12 +70,12 @@ func (m *CreateMessageRequest) GetUris() []string {
 }
 
 type CreateMessageResponse struct {
-	StatusCode           int32    `protobuf:"varint,1,opt,name=status_code,json=statusCode,proto3" json:"status_code,omitempty"`
-	Message              string   `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
-	MessageId            int64    `protobuf:"varint,3,opt,name=message_id,json=messageId,proto3" json:"message_id,omitempty"`
-	Content              string   `protobuf:"bytes,4,opt,name=content,proto3" json:"content,omitempty"`
-	Uris                 []string `protobuf:"bytes,5,rep,name=uris,proto3" json:"uris,omitempty"`
-	CreateTime           int64    `protobuf:"varint,6,opt,name=create_time,json=createTime,proto3" json:"create_time,omitempty"`
+	StatusCode           int32    `protobuf:"varint,1,opt,name=status_code,json=statusCode,proto3" json:"status_code"`
+	Message              string   `protobuf:"bytes,2,opt,name=message,proto3" json:"message"`
+	MessageId            int64    `protobuf:"varint,3,opt,name=message_id,json=messageId,proto3" json:"message_id"`
+	Content              string   `protobuf:"bytes,4,opt,name=content,proto3" json:"content"`
+	Uris                 []string `protobuf:"bytes,5,rep,name=uris,proto3" json:"uris"`
+	CreateTime           int64    `protobuf:"varint,6,opt,name=create_time,json=createTime,proto3" json:"create_time"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -150,9 +150,9 @@ func (m *CreateMessageResponse) GetCreateTime() int64 {
 
 // GET /get/self_message
 type GetSelfMessageRequest struct {
-	Index                int64    `protobuf:"varint,1,opt,name=index,proto3" json:"index,omitempty"`
-	Count                int64    `protobuf:"varint,2,opt,name=count,proto3" json:"count,omitempty"`
-	MessageType          int32    `protobuf:"varint,3,opt,name=message_type,json=messageType,proto3" json:"message_type,omitempty"`
+	Index                int64    `protobuf:"varint,1,opt,name=index,proto3" json:"index"`
+	Count                int64    `protobuf:"varint,2,opt,name=count,proto3" json:"count"`
+	MessageType          int32    `protobuf:"varint,3,opt,name=message_type,json=messageType,proto3" json:"message_type"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -205,10 +205,10 @@ func (m *GetSelfMessageRequest) GetMessageType() int32 {
 }
 
 type MessageInfo struct {
-	MessageId            int64    `protobuf:"varint,1,opt,name=message_id,json=messageId,proto3" json:"message_id,omitempty"`
-	Content              string   `protobuf:"bytes,2,opt,name=content,proto3" json:"content,omitempty"`
-	Urls                 []string `protobuf:"bytes,3,rep,name=urls,proto3" json:"urls,omitempty"`
-	CreateTime           int64    `protobuf:"varint,4,opt,name=create_time,json=createTime,proto3" json:"create_time,omitempty"`
+	MessageId            int64    `protobuf:"varint,1,opt,name=message_id,json=messageId,proto3" json:"message_id"`
+	Content              string   `protobuf:"bytes,2,opt,name=content,proto3" json:"content"`
+	Urls                 []string `protobuf:"bytes,3,rep,name=urls,proto3" json:"urls"`
+	CreateTime           int64    `protobuf:"varint,4,opt,name=create_time,json=createTime,proto3" json:"create_time"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -268,11 +268,11 @@ func (m *MessageInfo) GetCreateTime() int64 {
 }
 
 type GetSelfMessageResonse struct {
-	StatusCode           int32          `protobuf:"varint,1,opt,name=status_code,json=statusCode,proto3" json:"status_code,omitempty"`
-	Message              string         `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
-	MessageInfos         []*MessageInfo `protobuf:"bytes,3,rep,name=message_infos,json=messageInfos,proto3" json:"message_infos,omitempty"`
-	Count                int64          `protobuf:"varint,4,opt,name=count,proto3" json:"count,omitempty"`
-	HasMore              bool           `protobuf:"varint,5,opt,name=has_more,json=hasMore,proto3" json:"has_more,omitempty"`
+	StatusCode           int32          `protobuf:"varint,1,opt,name=status_code,json=statusCode,proto3" json:"status_code"`
+	Message              string         `protobuf:"bytes,2,opt,name=message,proto3" json:"message"`
+	MessageInfos         []*MessageInfo `protobuf:"bytes,3,rep,name=message_infos,json=messageInfos,proto3" json:"message_infos"`
+	Count                int64          `protobuf:"varint,4,opt,name=count,proto3" json:"count"`
+	HasMore              bool           `protobuf:"varint,5,opt,name=has_more,json=hasMore,proto3" json:"has_more"`
 	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
 	XXX_unrecognized     []byte         `json:"-"`
 	XXX_sizecache        int32          `json:"-"`

@@ -21,7 +21,7 @@ var _ = math.Inf
 const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
 type UploadImageRequest struct {
-	Image                []byte   `protobuf:"bytes,1,opt,name=image,proto3" json:"image,omitempty"`
+	Image                []byte   `protobuf:"bytes,1,opt,name=image,proto3" json:"image"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -60,10 +60,10 @@ func (m *UploadImageRequest) GetImage() []byte {
 }
 
 type UploadImageResponse struct {
-	StatusCode           int32    `protobuf:"varint,1,opt,name=status_code,json=statusCode,proto3" json:"status_code,omitempty"`
-	Message              string   `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
-	Uri                  string   `protobuf:"bytes,3,opt,name=uri,proto3" json:"uri,omitempty"`
-	Url                  string   `protobuf:"bytes,4,opt,name=url,proto3" json:"url,omitempty"`
+	StatusCode           int32    `protobuf:"varint,1,opt,name=status_code,json=statusCode,proto3" json:"status_code"`
+	Message              string   `protobuf:"bytes,2,opt,name=message,proto3" json:"message"`
+	Uri                  string   `protobuf:"bytes,3,opt,name=uri,proto3" json:"uri"`
+	Url                  string   `protobuf:"bytes,4,opt,name=url,proto3" json:"url"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
