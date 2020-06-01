@@ -1,39 +1,39 @@
 syntax = "proto3";
 
-//创建帖子
-// POST /create/message
-message CreateMessageRequest {
+//创建二手消息
+// POST /create/second_hand
+message CreateSecondHandRequest {
     string content = 1;//文本内容
     repeated string uris = 2;//图片uri列表
+    float money = 3;//二手金额
 }
 
-message CreateMessageResponse {
+message CreateSecondHandResponse {
      int32 status_code = 1; //状态码，0是成功，其它是错误码
      string message = 2; // 错误信息，0时为success
-     int64 message_id = 3; //消息id
-     string content = 4;//文本内容
-     repeated string uris = 5;//图片信息
-     int64 create_time = 6;//创建时间
+     SecondHandInfo second_hand_info = 3;//二手信息
+
 }
 
 
 //获取自己的帖子
 
-// GET /get/self_message
-message GetSelfMessageRequest {
+// GET /get/self_second_hand
+message GetSelfSecondHandRequest {
     int64 index = 1;//从第几个开始
     int64 count = 2;//获取多少个
     int32 message_type = 3;// 获取哪种消息 1:thread
 }
 
-message MessageInfo {
+message SecondHandInfo {
      int64 message_id = 1;//消息id
      string content = 2; // 文本信息
      repeated string urls = 3;//图片信息
      int64 create_time = 4;//创建时间
+     float money = 5;//二手金额
 }
 
-message GetSelfMessageResonse {
+message GetSelfSecondHandResonse {
      int32 status_code = 1; //状态码，0是成功，其它是错误码
      string message = 2; // 错误信息，0时为success
      repeated MessageInfo message_infos = 3;

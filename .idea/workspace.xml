@@ -2,7 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="89692903-a79d-4e92-8b88-42721aec7c83" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/proto/second_hand.proto" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/conf/conf.go" beforeDir="false" afterPath="$PROJECT_DIR$/conf/conf.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/conf/conf.yml" beforeDir="false" afterPath="$PROJECT_DIR$/conf/conf.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dal/db/course.go" beforeDir="false" afterPath="$PROJECT_DIR$/dal/db/course.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/handler/get_course_by_week_num.go" beforeDir="false" afterPath="$PROJECT_DIR$/handler/get_course_by_week_num.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/handler/get_cur_course.go" beforeDir="false" afterPath="$PROJECT_DIR$/handler/get_cur_course.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/conf.go" beforeDir="false" afterPath="$PROJECT_DIR$/model/conf.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/proto/class_schedule.proto" beforeDir="false" afterPath="$PROJECT_DIR$/proto/class_schedule.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/proto/message.proto" beforeDir="false" afterPath="$PROJECT_DIR$/proto/message.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/proto/upload.proto" beforeDir="false" afterPath="$PROJECT_DIR$/proto/upload.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/proto_gen/class_schedule/class_schedule.pb.go" beforeDir="false" afterPath="$PROJECT_DIR$/proto_gen/class_schedule/class_schedule.pb.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -112,10 +124,10 @@
       <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state x="184" y="112" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1440.900@0.0.1440.900" timestamp="1584806701427" />
-    <state x="443" y="259" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1586095568936">
+    <state x="443" y="259" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1590889694395">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state x="443" y="259" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1440.900@0.0.1440.900" timestamp="1586095568936" />
+    <state x="443" y="259" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1440.900@0.0.1440.900" timestamp="1590889694395" />
     <state x="417" y="96" key="#go_build_err_map.go" timestamp="1588608567512">
       <screen x="0" y="0" width="1440" height="900" />
     </state>

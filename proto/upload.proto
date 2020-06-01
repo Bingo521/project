@@ -13,3 +13,5 @@ message UploadImageResponse {
      string uri = 3;//图片uri
      string url = 4;//图片url
 }
+
+//上传用户信息

@@ -3,6 +3,7 @@ package handler
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"my_project/conf"
 	"my_project/dal/db"
 	"my_project/error_code"
 	"my_project/logs"
@@ -34,6 +35,9 @@ func (h *GetCurCurrentCourseHandler)Execute()*class_schedule.GetCurClassResponse
 	if err != nil{
 		logs.Error("make req err=%v",err)
 		return h.resp
+	}
+	if conf.Conf.IsDebug(){
+		return debugResp()
 	}
 	schoolName,err := h.getCurSchoolName()
 	if err != nil{
@@ -98,4 +102,89 @@ func (h* GetCurCurrentCourseHandler)getWeekNum(schoolName string)(int32,error){
 		subWeek ++
 	}
 	return int32(subWeek),nil
+}
+
+func debugResp()*class_schedule.GetCurClassResponse{
+	resp := &class_schedule.GetCurClassResponse{}
+	resp.Message = "success"
+	resp.StatusCode = 0
+	resp.SchoolName = "北京大学"
+	resp.Week = 1
+	resp.Courses = []*class_schedule.Course{
+		&class_schedule.Course{
+			WeekNum: class_schedule.Week_Mon,
+			ClassNum:1,
+			CourseName:"高等数学",
+			TeacherName:"张翠芳",
+			Place: "1号楼B432",
+		},
+		&class_schedule.Course{
+			WeekNum: class_schedule.Week_Mon,
+			ClassNum:2,
+			CourseName:"高等数学",
+			TeacherName:"张翠芳",
+			Place: "1号楼B432",
+		},&class_schedule.Course{
+			WeekNum: class_schedule.Week_Tue,
+			ClassNum:3,
+			CourseName:"高等数学",
+			TeacherName:"张翠芳",
+			Place: "1号楼B432",
+		},&class_schedule.Course{
+			WeekNum: class_schedule.Week_Tue,
+			ClassNum:4,
+			CourseName:"高等数学",
+			TeacherName:"张翠芳",
+			Place: "1号楼B432",
+		},&class_schedule.Course{
+			WeekNum: 3,
+			ClassNum:1,
+			CourseName:"高等数学",
+			TeacherName:"张翠芳",
+			Place: "1号楼B432",
+		},&class_schedule.Course{
+			WeekNum: 3,
+			ClassNum:4,
+			CourseName:"高等数学",
+			TeacherName:"张翠芳",
+			Place: "1号楼B432",
+		},&class_schedule.Course{
+			WeekNum: 4,
+			ClassNum:5,
+			CourseName:"高等数学",
+			TeacherName:"张翠芳",
+			Place: "1号楼B432",
+		},&class_schedule.Course{
+			WeekNum: 4,
+			ClassNum:6,
+			CourseName:"高等数学",
+			TeacherName:"张翠芳",
+			Place: "1号楼B432",
+		},&class_schedule.Course{
+			WeekNum: 4,
+			ClassNum:3,
+			CourseName:"高等数学",
+			TeacherName:"张翠芳",
+			Place: "1号楼B432",
+		},&class_schedule.Course{
+			WeekNum: 5,
+			ClassNum:1,
+			CourseName:"高等数学",
+			TeacherName:"张翠芳",
+			Place: "1号楼B432",
+		},&class_schedule.Course{
+			WeekNum: 6,
+			ClassNum:1,
+			CourseName:"高等数学",
+			TeacherName:"张翠芳",
+			Place: "1号楼B432",
+		},&class_schedule.Course{
+			WeekNum: 7,
+			ClassNum:1,
+			CourseName:"高等数学",
+			TeacherName:"张翠芳",
+			Place: "1号楼B432",
+		},
+	}
+	return resp
 }

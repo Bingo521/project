@@ -1,6 +1,5 @@
 package db
 
-
 import (
 	"encoding/json"
 	"my_project/model"

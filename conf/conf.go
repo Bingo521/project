@@ -1,6 +1,8 @@
 package conf
 
 import (
+	"encoding/json"
+	"my_project/logs"
 	"my_project/model"
 	"my_project/util"
 )
@@ -13,5 +15,9 @@ func init() {
 	Conf, err = util.ReadYamlFile(confPath)
 	if err != nil {
 		panic(err)
+	}
+	b,err:=json.Marshal(Conf)
+	if err != nil{
+		logs.Info("conf = %v",string(b))
 	}
 }

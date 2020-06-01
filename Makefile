@@ -11,8 +11,10 @@ scp:
 
 gen_proto:
 	mkdir -p proto_gen/login
-	mkdir -p proto_gen/class_schedule
 	protoc --proto_path=proto --go_out=./proto_gen/login ./proto/login.proto
+
+gen_gen_class_schedule:
+	mkdir -p proto_gen/class_schedule
 	protoc --proto_path=proto --go_out=./proto_gen/class_schedule ./proto/class_schedule.proto
 
 gen_upload:
@@ -22,5 +24,6 @@ gen_upload:
 gen_message:
 	mkdir -p proto_gen/message
 	protoc --proto_path=proto --go_out=./proto_gen/message ./proto/message.proto
+
 
 

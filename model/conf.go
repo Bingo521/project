@@ -7,6 +7,7 @@ type Config struct {
 	Redis []*Redis `json:"redis",yaml:"redis"`
 	Node  int64    `json:"node",yaml:"node"`
 	Log *Log `json:"log",yaml:"node"`
+	Mode string `json:"mode",yaml:"mode"`
 }
 
 type Mysql struct {
@@ -38,4 +39,12 @@ func (c *Config) GetMysql() *Mysql {
 func (c *Config) GetRedis() *Redis {
 	index := rand.Int63n(int64(len(c.Mysql)))
 	return c.Redis[index]
+}
+
+func (c *Config)IsDebug()bool{
+	return c.Mode == "debug"
+}
+
+func (c *Config)IsProduct()bool{
+	return c.Mode =="product"
 }
