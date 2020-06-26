@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+enum DiggType {
+    ZERO = 0;//无意义
+    DIGG = 1；点赞
+    CANCAL_DIGG = 2;//取消点赞
+}
+
+//点赞
+//POST /digg
+message DiggRequest {
+    int64 message_id = 1;//点赞的消息id
+    DiggType digg_type = 2;//点赞类型
+}
+
+message DiggResponse {
+     int32 status_code = 1; //状态码，0是成功，其它是错误码
+     string message = 2; // 错误信息，0时为success
+     int32 digg_count = 3;// 当前点赞数
+}
+

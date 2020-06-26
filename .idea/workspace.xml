@@ -2,19 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="89692903-a79d-4e92-8b88-42721aec7c83" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/proto/second_hand.proto" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/proto/comment.proto" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/proto/digg.proto" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/conf/conf.go" beforeDir="false" afterPath="$PROJECT_DIR$/conf/conf.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/conf/conf.yml" beforeDir="false" afterPath="$PROJECT_DIR$/conf/conf.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dal/db/course.go" beforeDir="false" afterPath="$PROJECT_DIR$/dal/db/course.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/handler/get_course_by_week_num.go" beforeDir="false" afterPath="$PROJECT_DIR$/handler/get_course_by_week_num.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/handler/get_cur_course.go" beforeDir="false" afterPath="$PROJECT_DIR$/handler/get_cur_course.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/conf.go" beforeDir="false" afterPath="$PROJECT_DIR$/model/conf.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/proto/class_schedule.proto" beforeDir="false" afterPath="$PROJECT_DIR$/proto/class_schedule.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/consts/school_name.go" beforeDir="false" afterPath="$PROJECT_DIR$/consts/school_name.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/proto/message.proto" beforeDir="false" afterPath="$PROJECT_DIR$/proto/message.proto" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/proto/upload.proto" beforeDir="false" afterPath="$PROJECT_DIR$/proto/upload.proto" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/proto_gen/class_schedule/class_schedule.pb.go" beforeDir="false" afterPath="$PROJECT_DIR$/proto_gen/class_schedule/class_schedule.pb.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/verification_code/verification_code_loder.go" beforeDir="false" afterPath="$PROJECT_DIR$/verification_code/verification_code_loder.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,6 +54,7 @@
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="watcher.settings" />
   </component>
   <component name="RecentsManager">
