@@ -2,12 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="89692903-a79d-4e92-8b88-42721aec7c83" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/proto/comment.proto" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/proto/digg.proto" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/consts/school_name.go" beforeDir="false" afterPath="$PROJECT_DIR$/consts/school_name.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/proto/message.proto" beforeDir="false" afterPath="$PROJECT_DIR$/proto/message.proto" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/verification_code/verification_code_loder.go" beforeDir="false" afterPath="$PROJECT_DIR$/verification_code/verification_code_loder.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/proto/tag.proto" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
