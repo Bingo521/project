@@ -63,8 +63,8 @@ var funcArr = []*Handler{
 		Func: CreateMessage,
 	},&Handler{
 		Type: GET,
-		Path: "/get/self_message",
-		Func: GetSelfMessage,
+		Path: "/get/user_message",
+		Func: GetUserMessage,
 	},
 }
 
@@ -129,7 +129,7 @@ func CreateMessage(c *gin.Context){
 	c.JSON(200,h.Execute())
 }
 
-func GetSelfMessage(c *gin.Context){
-	h:= handler.NewGetSelfMessageHandler(c)
+func GetUserMessage(c *gin.Context){
+	h:= handler.NewGetUserMessageHandler(c)
 	c.JSON(200,h.Execute())
 }

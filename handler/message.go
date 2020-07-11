@@ -12,6 +12,7 @@ import (
 	"my_project/model"
 	"my_project/proto_gen/message"
 	"my_project/util"
+	"strconv"
 )
 
 type MessageHandler struct {
@@ -53,32 +54,41 @@ func (h *MessageHandler)Execute()*message.CreateMessageResponse{
 		resp.Message = error_code.SYS_MESSAGE_SERVER_ERR
 		return &resp
 	}
-	mess,err:=db.CreateMessage(openId,mId,consts.MESSAGE_TYPE_THREAD,h.req.Content,h.req.Uris)
+	mess,err:=db.CreateMessage(openId,mId,consts.MESSAGE_TYPE_NORMAL_THREAD,h.req.Content,h.req.Uris)
 	if err != nil{
 		logs.Error("create message err :%v",err)
 		resp.StatusCode = error_code.ERR_SERVER_ERR
 		resp.Message = error_code.SYS_MESSAGE_SERVER_ERR
 		return &resp
 	}
-	resp.Content = h.req.Content
-	resp.Uris = h.req.Uris
-	resp.MessageId = mId
-	resp.CreateTime = mess.CreateTime.Unix()
+	resp.MessageInfo = &message.MessageInfo{
+		Content: h.req.Content,
+		Urls: h.req.Uris,
+		MessageId: mId,
+		CreateTime:  mess.CreateTime.Unix(),
+	}
 	return &resp
 }
 
 func (h *MessageHandler)getReq()(*message.CreateMessageRequest,error){
 	content := h.c.PostForm("content")
 	strUris := h.c.PostForm("uris")
+	messageType := h.c.PostForm("message_type")
 	var uris []string
 	err := json.Unmarshal([]byte(strUris),&uris)
 	if err != nil{
 		logs.Error("get req err:uris = %v,err = %v",strUris,err)
 		return nil,err
 	}
+	iMessageType,err:=strconv.ParseInt(messageType,10,64)
+	if err != nil{
+		logs.Warn("[MessageHandler] message_type = %v is illegal",messageType)
+		return nil,err
+	}
 	return &message.CreateMessageRequest{
 		Content: content,
 		Uris: uris,
+		MessageType: int32(iMessageType),
 	},nil
 }
 
