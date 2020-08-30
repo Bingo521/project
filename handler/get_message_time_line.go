@@ -2,7 +2,6 @@ package handler
 
 import (
 	"encoding/json"
-	"errors"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"my_project/dal/db"
@@ -10,70 +9,37 @@ import (
 	"my_project/logs"
 	"my_project/model"
 	"my_project/proto_gen/message"
-	"my_project/util"
 	"strconv"
 )
 
-type GetUserMessageHandler struct {
-	c    *gin.Context
-	comm *model.CtxComm
-	req  *message.GetUserMessageRequest
-
+type GetMessageByTimeLine struct {
+	c        *gin.Context
+	comm     *model.CtxComm
+	r        *message.GetMessageRequest
 	messages []model.Message
 	userInfo map[string]*model.UserInfo
 	hasMore  bool
 }
 
-func NewGetUserMessageHandler(c *gin.Context) *GetUserMessageHandler {
-	comm := util.GetCtxComm(c)
-	return &GetUserMessageHandler{
-		c:    c,
-		comm: comm,
+func NewGetMessageByTimeLine(c *gin.Context) *GetMessageByTimeLine {
+	return &GetMessageByTimeLine{
+		c: c,
 	}
 }
 
-func (h *GetUserMessageHandler) getReq() (*message.GetUserMessageRequest, error) {
-	if h.c == nil {
-		return nil, errors.New("context is nil")
-	}
-	strIndex := h.c.Query("index")
-	strCount := h.c.Query("count")
-	openId := h.c.Query("open_id")
-	logs.Info("index = %v,count = %v,open_id = %v", strIndex, strCount, openId)
-	if strIndex == "" || strCount == "" || openId == "" {
-		return nil, fmt.Errorf("param not find")
-	}
-	index, err := strconv.ParseInt(strIndex, 10, 64)
+func (h *GetMessageByTimeLine) Handle() *message.GetMessageResponse {
+	req, err := h.makeReq()
 	if err != nil {
-		return nil, fmt.Errorf("index is err:%v", err)
-	}
-	count, err := strconv.ParseInt(strCount, 10, 64)
-	if err != nil {
-		return nil, fmt.Errorf("count is err:%v", err)
-	}
-	if count == 0 {
-		return nil, nil
-	}
-	return &message.GetUserMessageRequest{
-		Index:  int32(index),
-		Count:  int32(count),
-		OpenId: openId,
-	}, nil
-}
-
-func (h *GetUserMessageHandler) Execute() *message.GetUserMessageResonse {
-	req, err := h.getReq()
-	if err != nil {
-		logs.Warn("[GetUserMessageHandler] make req err:%v", err)
+		logs.Warn("[GetMessageByTimeLine] make req err:%v", err)
 		return h.makeErrResp(error_code.ERR_PARAM_ILLEGAL, error_code.SYS_MESSAGE_PARAM_ILLEGAL)
 	}
-	h.req = req
+	h.r = req
 	if err := h.check(); err != nil {
-		logs.Warn("[GetUserMessageHandler] check err:%v", err)
+		logs.Warn("[GetMessageByTimeLine] check err:%v", err)
 		return h.makeErrResp(error_code.ERR_PARAM_ILLEGAL, error_code.SYS_MESSAGE_PARAM_ILLEGAL)
 	}
 	if err := h.loadMessages(); err != nil {
-		logs.Warn("[GetUserMessageHandler] GetUserInfo err:%v", err)
+		logs.Warn("[GetMessageByTimeLine] GetUserInfo err:%v", err)
 		return h.makeErrResp(error_code.ERR_SERVER_ERR, error_code.SYS_MESSAGE_SERVER_ERR)
 	}
 	if err := h.loadUserInfo(); err != nil {
@@ -84,29 +50,51 @@ func (h *GetUserMessageHandler) Execute() *message.GetUserMessageResonse {
 	resp := h.makeErrResp(error_code.ERR_SUCCESS, error_code.SYS_MESSAGE_SUCCESS)
 	resp.HasMore = h.hasMore
 	resp.MessageInfos = respMess
-	resp.NextIndex = req.Index + int32(len(h.messages))
-	resp.Count = int64(len(respMess))
+	resp.NextIndex = int32(req.Index + int32(len(h.messages)))
 	return resp
 }
 
-func (h *GetUserMessageHandler) check() error {
-	if h.req == nil {
+func (h *GetMessageByTimeLine) makeReq() (*message.GetMessageRequest, error) {
+	index := h.c.Query("index")
+	iindex, err := strconv.ParseInt(index, 10, 64)
+	if err != nil {
+		return nil, fmt.Errorf("index = %v is illegal", index)
+	}
+	count := h.c.Query("count")
+	icount, err := strconv.ParseInt(count, 10, 64)
+	if err != nil {
+		return nil, fmt.Errorf("count = %v is illegal", count)
+	}
+	firstTime := h.c.Query("first_time")
+	iFirstTime, err := strconv.ParseInt(firstTime, 10, 64)
+	if err != nil {
+		return nil, fmt.Errorf("first_time = %v is illegal", firstTime)
+	}
+	return &message.GetMessageRequest{
+		Index:     int32(iindex),
+		Count:     int32(icount),
+		FirstTime: iFirstTime,
+	}, nil
+}
+
+func (h *GetMessageByTimeLine) check() error {
+	if h.r == nil {
 		return fmt.Errorf("req is nil")
 	}
-	if h.req.Index < 0 || h.req.Count <= 0 || h.req.Count > 20 {
+	if h.r.Index < 0 || h.r.Count <= 0 || h.r.Count > 20 {
 		return fmt.Errorf("param is illegal")
 	}
 	return nil
 }
 
-func (h *GetUserMessageHandler) makeErrResp(errCode int32, errMessage string) *message.GetUserMessageResonse {
-	return &message.GetUserMessageResonse{
+func (h *GetMessageByTimeLine) makeErrResp(errCode int32, errMessage string) *message.GetMessageResponse {
+	return &message.GetMessageResponse{
 		StatusCode: errCode,
 		Message:    errMessage,
 	}
 }
 
-func (h *GetUserMessageHandler) transToClientMessage() []*message.MessageInfo {
+func (h *GetMessageByTimeLine) transToClientMessage() []*message.MessageInfo {
 	messageInfos := make([]*message.MessageInfo, 0, len(h.messages))
 	for _, messageItem := range h.messages {
 		var uris []string
@@ -144,7 +132,7 @@ func (h *GetUserMessageHandler) transToClientMessage() []*message.MessageInfo {
 	return messageInfos
 }
 
-func (h *GetUserMessageHandler) GetOpenIDs(messages []model.Message) []string {
+func (h *GetMessageByTimeLine) GetOpenIDs(messages []model.Message) []string {
 	opendIds := make([]string, 0, len(messages))
 	for _, mess := range messages {
 		opendIds = append(opendIds, mess.OpenId)
@@ -152,7 +140,7 @@ func (h *GetUserMessageHandler) GetOpenIDs(messages []model.Message) []string {
 	return opendIds
 }
 
-func (h *GetUserMessageHandler) loadUserInfo() error {
+func (h *GetMessageByTimeLine) loadUserInfo() error {
 	openIDs := h.GetOpenIDs(h.messages)
 	userInfo, err := db.MGetUserInfo(openIDs)
 	if err != nil {
@@ -162,15 +150,15 @@ func (h *GetUserMessageHandler) loadUserInfo() error {
 	return nil
 }
 
-func (h *GetUserMessageHandler) loadMessages() error {
-	messages, err := db.GetMessageByOpenId(h.comm.OpenId, int64(h.req.Index), int64(h.req.Count+1))
+func (h *GetMessageByTimeLine) loadMessages() error {
+	messages, err := db.GetMessageTimeLine(h.r.FirstTime, h.r.Index, h.r.Count+1)
 	if err != nil {
 		return err
 	}
 	needMessage := messages
 	hasMore := false
-	if len(messages) > int(h.req.Count) {
-		needMessage = needMessage[:h.req.Count]
+	if len(messages) > int(h.r.Count) {
+		needMessage = needMessage[:h.r.Count]
 		hasMore = true
 	}
 	h.messages = needMessage

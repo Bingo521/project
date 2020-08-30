@@ -37,7 +37,7 @@ var funcArr = []*Handler{
 	&Handler{
 		Type: ANY,
 		Path: "/set_school",
-		Func:SetSchool,
+		Func: SetSchool,
 	},
 	&Handler{
 		Type: ANY,
@@ -53,18 +53,30 @@ var funcArr = []*Handler{
 		Type: ANY,
 		Path: "/set_school/verify_code",
 		Func: GetVerifyCode,
-	},&Handler{
+	}, &Handler{
 		Type: POST,
 		Path: "/upload/image",
 		Func: UploadImage,
-	},&Handler{
+	}, &Handler{
 		Type: POST,
 		Path: "/create/message",
 		Func: CreateMessage,
-	},&Handler{
+	}, &Handler{
 		Type: GET,
 		Path: "/get/user_message",
 		Func: GetUserMessage,
+	}, &Handler{
+		Type: GET,
+		Path: "/get/message/time_line",
+		Func: GetMessageByTimeLine,
+	}, &Handler{
+		Type: GET,
+		Path: "/get/message/hot",
+		Func: GetMessageByTimeLine,
+	}, &Handler{
+		Type: POST,
+		Path: "/upload/user_info",
+		Func: UploadUserInfo,
 	},
 }
 
@@ -79,7 +91,7 @@ func Bind(r *gin.Engine) {
 			r.POST(handler.Path, handler.Func)
 		}
 	}
-	r.Static("source/image/origin","./source/image/origin")
+	r.Static("source/image/origin", "./source/image/origin")
 }
 
 func Ping(c *gin.Context) {
@@ -99,37 +111,47 @@ func GetSchools(c *gin.Context) {
 	c.JSON(200, h.Execute(c))
 }
 
-func SetSchool(c *gin.Context){
+func SetSchool(c *gin.Context) {
 	h := handler.NewSetSchoolHandler(c)
 	c.JSON(200, h.Execute())
 }
 
-func GetCurCourse(c *gin.Context){
+func GetCurCourse(c *gin.Context) {
 	h := handler.NewGetCurCurrentCourseHandler(c)
-	c.JSON(200,h.Execute())
+	c.JSON(200, h.Execute())
 }
 
-func GetCourseByWeek(c * gin.Context){
+func GetCourseByWeek(c *gin.Context) {
 	h := handler.NewGetCourseByWeekNumHandler(c)
-	c.JSON(200,h.Execute())
+	c.JSON(200, h.Execute())
 }
 
-func GetVerifyCode(c *gin.Context){
+func GetVerifyCode(c *gin.Context) {
 	h := handler.NewGetVerifyCodeHandler(c)
-	c.JSON(200,h.Execute())
+	c.JSON(200, h.Execute())
 }
 
-func UploadImage(c *gin.Context){
+func UploadImage(c *gin.Context) {
 	h := handler.NewImageHandler(c)
-	c.JSON(200,h.Execute())
+	c.JSON(200, h.Execute())
 }
 
-func CreateMessage(c *gin.Context){
+func CreateMessage(c *gin.Context) {
 	h := handler.NewMessageHandler(c)
-	c.JSON(200,h.Execute())
+	c.JSON(200, h.Execute())
 }
 
-func GetUserMessage(c *gin.Context){
-	h:= handler.NewGetUserMessageHandler(c)
-	c.JSON(200,h.Execute())
+func GetUserMessage(c *gin.Context) {
+	h := handler.NewGetUserMessageHandler(c)
+	c.JSON(200, h.Execute())
+}
+
+func UploadUserInfo(c *gin.Context) {
+	h := handler.NewUploadUserInfoHandler(c)
+	c.JSON(200, h.Handle())
+}
+
+func GetMessageByTimeLine(c *gin.Context) {
+	h := handler.NewGetMessageByTimeLine(c)
+	c.JSON(200, h.Handle())
 }

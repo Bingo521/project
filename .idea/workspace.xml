@@ -2,14 +2,28 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="89692903-a79d-4e92-8b88-42721aec7c83" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/handler/get_message_time_line.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/handler/upload_user_info.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bind.go" beforeDir="false" afterPath="$PROJECT_DIR$/bind.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/consts/message_type.go" beforeDir="false" afterPath="$PROJECT_DIR$/consts/message_type.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dal/db/message.go" beforeDir="false" afterPath="$PROJECT_DIR$/dal/db/message.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dal/db/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/dal/db/user.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dal/redis/init.go" beforeDir="false" afterPath="$PROJECT_DIR$/dal/redis/init.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dal/redis/ope.go" beforeDir="false" afterPath="$PROJECT_DIR$/dal/redis/ope.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dal/redis/session.go" beforeDir="false" afterPath="$PROJECT_DIR$/dal/redis/session.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/handler/get_cur_course.go" beforeDir="false" afterPath="$PROJECT_DIR$/handler/get_cur_course.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/handler/get_self_message.go" beforeDir="false" afterPath="$PROJECT_DIR$/handler/get_self_message.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/handler/message.go" beforeDir="false" afterPath="$PROJECT_DIR$/handler/message.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/handler/login.go" beforeDir="false" afterPath="$PROJECT_DIR$/handler/login.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/handler/set_school.go" beforeDir="false" afterPath="$PROJECT_DIR$/handler/set_school.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/logs.go" beforeDir="false" afterPath="$PROJECT_DIR$/logs/logs.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/db_user_info.go" beforeDir="false" afterPath="$PROJECT_DIR$/model/db_user_info.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysql/mysql" beforeDir="false" afterPath="$PROJECT_DIR$/mysql/mysql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/proto_gen/login/login.pb.go" beforeDir="false" afterPath="$PROJECT_DIR$/proto_gen/login/login.pb.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/proto_gen/message/message.pb.go" beforeDir="false" afterPath="$PROJECT_DIR$/proto_gen/message/message.pb.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/proto_gen/upload/upload.pb.go" beforeDir="false" afterPath="$PROJECT_DIR$/proto_gen/upload/upload.pb.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,10 +43,6 @@
   </component>
   <component name="GoLibraries">
     <option name="indexEntireGoPath" value="false" />
-  </component>
-  <component name="ProjectFrameBounds" fullScreen="true">
-    <option name="width" value="714" />
-    <option name="height" value="900" />
   </component>
   <component name="ProjectId" id="1ZR8QN4vQqPDwLqLNuNuPqKfPx5" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -116,33 +126,17 @@
     <proxy>direct</proxy>
   </component>
   <component name="WindowStateProjectService">
-    <state x="184" y="112" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1584806701427">
+    <state x="443" y="259" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1597483405841">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state x="184" y="112" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1440.900@0.0.1440.900" timestamp="1584806701427" />
-    <state x="443" y="259" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1590889694395">
+    <state x="443" y="259" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1440.900@0.0.1440.900" timestamp="1597483405841" />
+    <state x="421" y="205" width="598" height="490" key="find.popup" timestamp="1598767920459">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state x="443" y="259" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1440.900@0.0.1440.900" timestamp="1590889694395" />
-    <state x="417" y="96" key="#go_build_err_map.go" timestamp="1588608567512">
+    <state x="421" y="205" width="598" height="490" key="find.popup/0.0.1440.900@0.0.1440.900" timestamp="1598767920459" />
+    <state x="385" y="196" width="670" height="676" key="search.everywhere.popup" timestamp="1598767905428">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state x="417" y="96" key="#go_build_err_map.go/0.0.1440.900@0.0.1440.900" timestamp="1588608567512" />
-    <state x="417" y="96" key="#go_build_main.go" timestamp="1584806934574">
-      <screen x="0" y="0" width="1440" height="900" />
-    </state>
-    <state x="417" y="96" key="#go_build_main.go/0.0.1440.900@0.0.1440.900" timestamp="1584806934574" />
-    <state x="229" y="89" key="SettingsEditor" timestamp="1585392211908">
-      <screen x="0" y="0" width="1440" height="900" />
-    </state>
-    <state x="229" y="89" key="SettingsEditor/0.0.1440.900@0.0.1440.900" timestamp="1585392211908" />
-    <state x="385" y="196" width="670" height="676" key="search.everywhere.popup" timestamp="1584847168831">
-      <screen x="0" y="0" width="1440" height="900" />
-    </state>
-    <state x="385" y="196" width="670" height="676" key="search.everywhere.popup/0.0.1440.900@0.0.1440.900" timestamp="1584847168831" />
-    <state x="450" y="339" key="vcs.readOnlyHandler.ReadOnlyStatusDialog" timestamp="1584842216420">
-      <screen x="0" y="0" width="1440" height="900" />
-    </state>
-    <state x="450" y="339" key="vcs.readOnlyHandler.ReadOnlyStatusDialog/0.0.1440.900@0.0.1440.900" timestamp="1584842216420" />
+    <state x="385" y="196" width="670" height="676" key="search.everywhere.popup/0.0.1440.900@0.0.1440.900" timestamp="1598767905428" />
   </component>
 </project>
