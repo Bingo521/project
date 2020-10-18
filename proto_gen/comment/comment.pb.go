@@ -255,7 +255,7 @@ func (x *CommentInfo) GetCommentedUserInfo() *MessageUserInfo {
 }
 
 //发布评论
-//POST /create/message
+//POST /create/comment
 type CreateCommentRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -526,6 +526,110 @@ func (x *GetCommentResponse) GetFirstTime() int64 {
 	return 0
 }
 
+//删除评论/回复
+//POST /delete/comment
+type DeleteCommentRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	CommentId int64 `protobuf:"varint,1,opt,name=comment_id,json=commentId,proto3" json:"comment_id"`
+}
+
+func (x *DeleteCommentRequest) Reset() {
+	*x = DeleteCommentRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_comment_proto_msgTypes[7]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *DeleteCommentRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteCommentRequest) ProtoMessage() {}
+
+func (x *DeleteCommentRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_comment_proto_msgTypes[7]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteCommentRequest.ProtoReflect.Descriptor instead.
+func (*DeleteCommentRequest) Descriptor() ([]byte, []int) {
+	return file_comment_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *DeleteCommentRequest) GetCommentId() int64 {
+	if x != nil {
+		return x.CommentId
+	}
+	return 0
+}
+
+type DeleteCommentResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	StatusCode int32  `protobuf:"varint,1,opt,name=status_code,json=statusCode,proto3" json:"status_code"` //状态码，0是成功，其它是错误码
+	Message    string `protobuf:"bytes,2,opt,name=message,proto3" json:"message"`                          // 错误信息，0时为success
+}
+
+func (x *DeleteCommentResponse) Reset() {
+	*x = DeleteCommentResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_comment_proto_msgTypes[8]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *DeleteCommentResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteCommentResponse) ProtoMessage() {}
+
+func (x *DeleteCommentResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_comment_proto_msgTypes[8]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteCommentResponse.ProtoReflect.Descriptor instead.
+func (*DeleteCommentResponse) Descriptor() ([]byte, []int) {
+	return file_comment_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *DeleteCommentResponse) GetStatusCode() int32 {
+	if x != nil {
+		return x.StatusCode
+	}
+	return 0
+}
+
+func (x *DeleteCommentResponse) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
 var File_comment_proto protoreflect.FileDescriptor
 
 var file_comment_proto_rawDesc = []byte{
@@ -600,7 +704,16 @@ var file_comment_proto_rawDesc = []byte{
 	0x6f, 0x72, 0x65, 0x18, 0x05, 0x20, 0x01, 0x28, 0x08, 0x52, 0x07, 0x68, 0x61, 0x73, 0x4d, 0x6f,
 	0x72, 0x65, 0x12, 0x1d, 0x0a, 0x0a, 0x66, 0x69, 0x72, 0x73, 0x74, 0x5f, 0x74, 0x69, 0x6d, 0x65,
 	0x18, 0x06, 0x20, 0x01, 0x28, 0x03, 0x52, 0x09, 0x66, 0x69, 0x72, 0x73, 0x74, 0x54, 0x69, 0x6d,
-	0x65, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x65, 0x22, 0x35, 0x0a, 0x14, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x43, 0x6f, 0x6d, 0x6d, 0x65,
+	0x6e, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x1d, 0x0a, 0x0a, 0x63, 0x6f, 0x6d,
+	0x6d, 0x65, 0x6e, 0x74, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x09, 0x63,
+	0x6f, 0x6d, 0x6d, 0x65, 0x6e, 0x74, 0x49, 0x64, 0x22, 0x52, 0x0a, 0x15, 0x44, 0x65, 0x6c, 0x65,
+	0x74, 0x65, 0x43, 0x6f, 0x6d, 0x6d, 0x65, 0x6e, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
+	0x65, 0x12, 0x1f, 0x0a, 0x0b, 0x73, 0x74, 0x61, 0x74, 0x75, 0x73, 0x5f, 0x63, 0x6f, 0x64, 0x65,
+	0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x0a, 0x73, 0x74, 0x61, 0x74, 0x75, 0x73, 0x43, 0x6f,
+	0x64, 0x65, 0x12, 0x18, 0x0a, 0x07, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x18, 0x02, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x07, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x62, 0x06, 0x70, 0x72,
+	0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -615,7 +728,7 @@ func file_comment_proto_rawDescGZIP() []byte {
 	return file_comment_proto_rawDescData
 }
 
-var file_comment_proto_msgTypes = make([]protoimpl.MessageInfo, 7)
+var file_comment_proto_msgTypes = make([]protoimpl.MessageInfo, 9)
 var file_comment_proto_goTypes = []interface{}{
 	(*MessageUserInfo)(nil),       // 0: MessageUserInfo
 	(*CommentMainInfo)(nil),       // 1: CommentMainInfo
@@ -624,6 +737,8 @@ var file_comment_proto_goTypes = []interface{}{
 	(*CreateCommentResponse)(nil), // 4: CreateCommentResponse
 	(*GetCommentRequest)(nil),     // 5: GetCommentRequest
 	(*GetCommentResponse)(nil),    // 6: GetCommentResponse
+	(*DeleteCommentRequest)(nil),  // 7: DeleteCommentRequest
+	(*DeleteCommentResponse)(nil), // 8: DeleteCommentResponse
 }
 var file_comment_proto_depIdxs = []int32{
 	1, // 0: CommentInfo.comment_main_info:type_name -> CommentMainInfo
@@ -729,6 +844,30 @@ func file_comment_proto_init() {
 				return nil
 			}
 		}
+		file_comment_proto_msgTypes[7].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*DeleteCommentRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_comment_proto_msgTypes[8].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*DeleteCommentResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -736,7 +875,7 @@ func file_comment_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_comment_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   7,
+			NumMessages:   9,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

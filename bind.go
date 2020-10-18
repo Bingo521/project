@@ -105,6 +105,18 @@ var funcArr = []*Handler{
 		Path: "/digg",
 		Type: POST,
 		Func: Digg,
+	}, &Handler{
+		Path: "/delete/message",
+		Type: POST,
+		Func: DeleteMessage,
+	}, &Handler{
+		Path: "/delete/second_hand",
+		Type: POST,
+		Func: DeleteSecondHand,
+	}, &Handler{
+		Path: "/delete/comment",
+		Type: POST,
+		Func: DeleteComment,
 	},
 }
 
@@ -212,4 +224,16 @@ func CreateComment(c *gin.Context) {
 func Digg(c *gin.Context) {
 	h := handler.NewDiggHandler(c)
 	c.JSON(200, h.Execute())
+}
+
+func DeleteMessage(c *gin.Context) {
+	c.JSON(200, handler.NewDeleteCommentHandler(c).Execute())
+}
+
+func DeleteComment(c *gin.Context) {
+	c.JSON(200, handler.NewDeleteCommentHandler(c).Execute())
+}
+
+func DeleteSecondHand(c *gin.Context) {
+	c.JSON(200, handler.NewDeleteSecondHandHandler(c).Execute())
 }

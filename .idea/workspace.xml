@@ -2,36 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="89692903-a79d-4e92-8b88-42721aec7c83" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/dal/db/comment.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dal/db/digg.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dal/db/digg_count.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dal/db/second_hand.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/handler/comment.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/handler/digg.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/handler/get_comment_time_line.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/handler/get_second_hand_time_line.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/handler/get_user_second_hand.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/handler/second_hand.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/model/db_comment.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/model/db_digg.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/model/db_digg_count.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/model/db_second_hand.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/util/wg.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/handler/delete_message.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bind.go" beforeDir="false" afterPath="$PROJECT_DIR$/bind.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dal/db/message.go" beforeDir="false" afterPath="$PROJECT_DIR$/dal/db/message.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dal/db/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/dal/db/user.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dal/redis/ope.go" beforeDir="false" afterPath="$PROJECT_DIR$/dal/redis/ope.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/handler/get_message_time_line.go" beforeDir="false" afterPath="$PROJECT_DIR$/handler/get_message_time_line.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/handler/get_self_message.go" beforeDir="false" afterPath="$PROJECT_DIR$/handler/get_self_message.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/handler/login.go" beforeDir="false" afterPath="$PROJECT_DIR$/handler/login.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dal/db/second_hand.go" beforeDir="false" afterPath="$PROJECT_DIR$/dal/db/second_hand.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/handler/message.go" beforeDir="false" afterPath="$PROJECT_DIR$/handler/message.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/db_message.go" beforeDir="false" afterPath="$PROJECT_DIR$/model/db_message.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/db_user_info.go" beforeDir="false" afterPath="$PROJECT_DIR$/model/db_user_info.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysql/mysql" beforeDir="false" afterPath="$PROJECT_DIR$/mysql/mysql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/handler/second_hand.go" beforeDir="false" afterPath="$PROJECT_DIR$/handler/second_hand.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/db_second_hand.go" beforeDir="false" afterPath="$PROJECT_DIR$/model/db_second_hand.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/proto_gen/comment/comment.pb.go" beforeDir="false" afterPath="$PROJECT_DIR$/proto_gen/comment/comment.pb.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/proto_gen/message/message.pb.go" beforeDir="false" afterPath="$PROJECT_DIR$/proto_gen/message/message.pb.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/proto_gen/second_hand/second_hand.pb.go" beforeDir="false" afterPath="$PROJECT_DIR$/proto_gen/second_hand/second_hand.pb.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

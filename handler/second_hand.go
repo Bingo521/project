@@ -9,7 +9,6 @@ import (
 	"my_project/error_code"
 	"my_project/logs"
 	"my_project/model"
-	"my_project/proto_gen/message"
 	"my_project/proto_gen/second_hand"
 	"my_project/util"
 	"strconv"
@@ -29,8 +28,8 @@ func NewSecondHandHandler(c *gin.Context) *SecondHandHandler {
 	}
 }
 
-func (h *SecondHandHandler) Execute() *message.CreateMessageResponse {
-	resp := message.CreateMessageResponse{}
+func (h *SecondHandHandler) Execute() *second_hand.CreateSecondHandResponse {
+	resp := second_hand.CreateSecondHandResponse{}
 	resp.StatusCode = 0
 	resp.Message = "success"
 	if h.c == nil || h.comm == nil {
@@ -42,30 +41,50 @@ func (h *SecondHandHandler) Execute() *message.CreateMessageResponse {
 	openId := h.comm.OpenId
 	h.req, err = h.getReq()
 	if err != nil {
-		logs.Error("get req err:%v", err)
+		logs.Error("[SecondHandHandler] get req err:%v", err)
 		resp.StatusCode = error_code.ERR_PARAM_ILLEGAL
 		resp.Message = error_code.SYS_MESSAGE_PARAM_ILLEGAL
 		return &resp
 	}
+	if err := h.checkParams(); err != nil {
+		logs.Error("[SecondHandHandler] checkParams err:%v", err)
+		resp.StatusCode = error_code.ERR_PARAM_ILLEGAL
+		resp.Message = error_code.SYS_MESSAGE_PARAM_ILLEGAL
+		return &resp
+	}
+	userInfo, err := db.GetUserInfo(openId)
+	if err != nil {
+		logs.Warn("[MessageHandler] openId = %v getUserInfo err:%v", openId, err)
+		resp.StatusCode = error_code.ERR_SERVER_ERR
+		resp.Message = error_code.SYS_MESSAGE_SERVER_ERR
+		return &resp
+	}
 	mId, err := redis.Inc("message_id")
 	if err != nil {
-		logs.Error("get message ID err:%v", err)
+		logs.Error("[SecondHandHandler] get message ID err:%v", err)
 		resp.StatusCode = error_code.ERR_SERVER_ERR
 		resp.Message = error_code.SYS_MESSAGE_SERVER_ERR
 		return &resp
 	}
 	mess, err := db.CreateSecondHand(openId, mId, h.req.Content, h.req.Uris, h.req.Price, h.req.Category)
 	if err != nil {
-		logs.Error("create message err :%v", err)
+		logs.Error("[SecondHandHandler] create message err :%v", err)
 		resp.StatusCode = error_code.ERR_SERVER_ERR
 		resp.Message = error_code.SYS_MESSAGE_SERVER_ERR
 		return &resp
 	}
-	resp.MessageInfo = &message.MessageInfo{
-		Content:    h.req.Content,
-		Urls:       h.req.Uris,
-		MessageId:  mId,
-		CreateTime: mess.CreateTime.Unix(),
+
+	resp.MessageInfo = &second_hand.SecondHandInfo{
+		Content:      h.req.Content,
+		Urls:         h.req.Uris,
+		Category:     h.req.Category,
+		Price:        h.req.Price,
+		MessageId:    mId,
+		CreateTime:   mess.CreateTime.Unix(),
+		DiggCount:    0,
+		CommentCount: 0,
+		Digg:         false,
+		UserInfo:     transToSecondHandInfo(userInfo),
 	}
 	return &resp
 }
@@ -100,8 +119,29 @@ func (h *SecondHandHandler) checkParams() error {
 	if h.req == nil {
 		return errors.New("param is nil")
 	}
-	if h.req.Content == "" || len(h.req.Uris) == 0 {
+	if h.req.Content == "" || len(h.req.Uris) == 0 || h.req.Category == "" {
 		return errors.New("param illegal")
 	}
 	return nil
+}
+
+func transToSecondHandInfo(userInfo *model.UserInfo) *second_hand.SecondHandUserInfo {
+	if userInfo == nil {
+		return nil
+	}
+	localUserInfo := second_hand.SecondHandUserInfo{}
+	localUserInfo.OpenId = userInfo.OpenId
+	if userInfo.ProfilePhoto != nil {
+		localUserInfo.ProfilePhoto = *userInfo.ProfilePhoto
+	}
+	if userInfo.Sex != nil {
+		localUserInfo.Sex = int32(*userInfo.Sex)
+	}
+	if userInfo.Name != nil {
+		localUserInfo.UserName = *userInfo.Name
+	}
+	if localUserInfo.UserName == "" && userInfo.WxName != nil {
+		localUserInfo.UserName = *userInfo.WxName
+	}
+	return &localUserInfo
 }

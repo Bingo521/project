@@ -13,6 +13,8 @@ func CreateSecondHand(openId string, message_id int64, content string, uris []st
 	message.CreateTime = time.Now()
 	message.ModifyTime = message.CreateTime
 	message.Content = content
+	message.Money = price
+	message.Category = category
 	imageUris, err := json.Marshal(uris)
 	if err != nil {
 		return nil, err
@@ -56,4 +58,8 @@ func GetSecondHandTimeLineByCategory(firstTime int64, index int32, count int32, 
 
 func UpdateSecondHand(messageID int64, params map[string]interface{}) error {
 	return db.Model(&model.SecondHand{}).Where("message_id = ?", messageID).Updates(params).Error
+}
+
+func DeleteSecondHandByMessageId(messageID int64) error {
+	return db.Model(&model.SecondHand{}).Where("message_id = ?", messageID).Delete(model.SecondHand{}).Error
 }

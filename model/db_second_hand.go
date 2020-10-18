@@ -17,5 +17,5 @@ type SecondHand struct {
 }
 
 func (m *SecondHand) TableName() string {
-	return "message"
+	return "second_hand"
 }

@@ -32,3 +32,7 @@ func GetCommentByTimeLine(messageID int64, startTime int64, index, count int32) 
 	}
 	return comments, nil
 }
+
+func DeleteCommentByMessageId(messageID int64) error {
+	return db.Model(&model.Comment{}).Where("comment_id = ?", messageID).Delete(model.Comment{}).Error
+}

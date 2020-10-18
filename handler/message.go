@@ -47,16 +47,9 @@ func (h *MessageHandler) Execute() *message.CreateMessageResponse {
 		resp.Message = error_code.SYS_MESSAGE_PARAM_ILLEGAL
 		return &resp
 	}
-	userInfos, err := db.MGetUserInfo([]string{openId})
+	userInfo, err := db.GetUserInfo(openId)
 	if err != nil {
 		logs.Warn("[MessageHandler] openId = %v getUserInfo err:%v", openId, err)
-		resp.StatusCode = error_code.ERR_SERVER_ERR
-		resp.Message = error_code.SYS_MESSAGE_SERVER_ERR
-		return &resp
-	}
-	userInfo, find := userInfos[openId]
-	if !find {
-		logs.Warn("[MessageHandler] openId = %v getUserInfo err:not find", openId)
 		resp.StatusCode = error_code.ERR_SERVER_ERR
 		resp.Message = error_code.SYS_MESSAGE_SERVER_ERR
 		return &resp

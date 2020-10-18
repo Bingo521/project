@@ -62,3 +62,7 @@ func GetMessageByMessageId(messageID int64) (*model.Message, error) {
 	}
 	return &messageInfo, nil
 }
+
+func DeleteMessageByMessageId(messageID int64) error {
+	return db.Model(&model.Message{}).Where("message_id = ?", messageID).Delete(model.Message{}).Error
+}
