@@ -9,31 +9,31 @@ import (
 	"my_project/error_code"
 	"my_project/logs"
 	"my_project/model"
-	"my_project/proto_gen/message"
+	"my_project/proto_gen/second_hand"
 	"my_project/util"
 	"strconv"
 )
 
-type GetUserMessageHandler struct {
+type GetSecondHandHandler struct {
 	c    *gin.Context
 	comm *model.CtxComm
-	req  *message.GetUserMessageRequest
+	req  *second_hand.GetUserSecondHandRequest
 
-	messages      []model.Message
+	messages      []model.SecondHand
 	userInfo      map[string]*model.UserInfo
 	mid2DiggCount map[int64]int64
 	hasMore       bool
 }
 
-func NewGetUserMessageHandler(c *gin.Context) *GetUserMessageHandler {
+func NewGetSecondHandHandler(c *gin.Context) *GetSecondHandHandler {
 	comm := util.GetCtxComm(c)
-	return &GetUserMessageHandler{
+	return &GetSecondHandHandler{
 		c:    c,
 		comm: comm,
 	}
 }
 
-func (h *GetUserMessageHandler) getReq() (*message.GetUserMessageRequest, error) {
+func (h *GetSecondHandHandler) getReq() (*second_hand.GetUserSecondHandRequest, error) {
 	if h.c == nil {
 		return nil, errors.New("context is nil")
 	}
@@ -55,26 +55,26 @@ func (h *GetUserMessageHandler) getReq() (*message.GetUserMessageRequest, error)
 	if count == 0 {
 		return nil, nil
 	}
-	return &message.GetUserMessageRequest{
+	return &second_hand.GetUserSecondHandRequest{
 		Index:  int32(index),
 		Count:  int32(count),
 		OpenId: openId,
 	}, nil
 }
 
-func (h *GetUserMessageHandler) Execute() *message.GetUserMessageResonse {
+func (h *GetSecondHandHandler) Execute() *second_hand.GetUserSecondHandResonse {
 	req, err := h.getReq()
 	if err != nil {
-		logs.Warn("[GetUserMessageHandler] make req err:%v", err)
+		logs.Warn("[GetSecondHandHandler] make req err:%v", err)
 		return h.makeErrResp(error_code.ERR_PARAM_ILLEGAL, error_code.SYS_MESSAGE_PARAM_ILLEGAL)
 	}
 	h.req = req
 	if err := h.check(); err != nil {
-		logs.Warn("[GetUserMessageHandler] check err:%v", err)
+		logs.Warn("[GetSecondHandHandler] check err:%v", err)
 		return h.makeErrResp(error_code.ERR_PARAM_ILLEGAL, error_code.SYS_MESSAGE_PARAM_ILLEGAL)
 	}
 	if err := h.loadData(); err != nil {
-		logs.Warn("[GetUserMessageHandler] loadData err:%v", err)
+		logs.Warn("[GetSecondHandHandler] loadData err:%v", err)
 		return h.makeErrResp(error_code.ERR_SERVER_ERR, error_code.SYS_MESSAGE_SERVER_ERR)
 	}
 	respMess := h.transToClientMessage()
@@ -86,7 +86,7 @@ func (h *GetUserMessageHandler) Execute() *message.GetUserMessageResonse {
 	return resp
 }
 
-func (h *GetUserMessageHandler) check() error {
+func (h *GetSecondHandHandler) check() error {
 	if h.req == nil {
 		return fmt.Errorf("req is nil")
 	}
@@ -96,15 +96,15 @@ func (h *GetUserMessageHandler) check() error {
 	return nil
 }
 
-func (h *GetUserMessageHandler) makeErrResp(errCode int32, errMessage string) *message.GetUserMessageResonse {
-	return &message.GetUserMessageResonse{
+func (h *GetSecondHandHandler) makeErrResp(errCode int32, errMessage string) *second_hand.GetUserSecondHandResonse {
+	return &second_hand.GetUserSecondHandResonse{
 		StatusCode: errCode,
 		Message:    errMessage,
 	}
 }
 
-func (h *GetUserMessageHandler) transToClientMessage() []*message.MessageInfo {
-	messageInfos := make([]*message.MessageInfo, 0, len(h.messages))
+func (h *GetSecondHandHandler) transToClientMessage() []*second_hand.SecondHandInfo {
+	messageInfos := make([]*second_hand.SecondHandInfo, 0, len(h.messages))
 	for _, messageItem := range h.messages {
 		var uris []string
 		if err := json.Unmarshal([]byte(messageItem.ImageUris), &uris); err != nil {
@@ -116,14 +116,13 @@ func (h *GetUserMessageHandler) transToClientMessage() []*message.MessageInfo {
 			logs.Warn("[GetMessageByTimeLine] transToClientMessage openId = %v not find UserInfo", messageItem.OpenId)
 			continue
 		}
-		messageInfo := &message.MessageInfo{
-			MessageId:   messageItem.MessageId,
-			Content:     messageItem.Content,
-			Urls:        uris,
-			MessageType: messageItem.Type,
-			CreateTime:  messageItem.CreateTime.Unix(),
+		messageInfo := &second_hand.SecondHandInfo{
+			MessageId:  messageItem.MessageId,
+			Content:    messageItem.Content,
+			Urls:       uris,
+			CreateTime: messageItem.CreateTime.Unix(),
 		}
-		clientUserInfo := &message.MessageUserInfo{
+		clientUserInfo := &second_hand.SecondHandUserInfo{
 			OpenId: userInfo.OpenId,
 		}
 		if userInfo.ProfilePhoto != nil {
@@ -136,13 +135,12 @@ func (h *GetUserMessageHandler) transToClientMessage() []*message.MessageInfo {
 			clientUserInfo.Sex = int32(*userInfo.Sex)
 		}
 		messageInfo.UserInfo = clientUserInfo
-		messageInfo.DiggCount = int32(h.mid2DiggCount[messageItem.MessageId])
 		messageInfos = append(messageInfos, messageInfo)
 	}
 	return messageInfos
 }
 
-func (h *GetUserMessageHandler) GetOpenIDs(messages []model.Message) []string {
+func (h *GetSecondHandHandler) GetOpenIDs(messages []model.SecondHand) []string {
 	opendIds := make([]string, 0, len(messages))
 	for _, mess := range messages {
 		opendIds = append(opendIds, mess.OpenId)
@@ -150,7 +148,7 @@ func (h *GetUserMessageHandler) GetOpenIDs(messages []model.Message) []string {
 	return opendIds
 }
 
-func (h *GetUserMessageHandler) loadUserInfo() error {
+func (h *GetSecondHandHandler) loadUserInfo() error {
 	openIDs := h.GetOpenIDs(h.messages)
 	userInfo, err := db.MGetUserInfo(openIDs)
 	if err != nil {
@@ -160,8 +158,8 @@ func (h *GetUserMessageHandler) loadUserInfo() error {
 	return nil
 }
 
-func (h *GetUserMessageHandler) loadMessages() error {
-	messages, err := db.GetMessageByOpenId(h.req.OpenId, int64(h.req.Index), int64(h.req.Count+1))
+func (h *GetSecondHandHandler) loadMessages() error {
+	messages, err := db.GetSecondHandByOpenId(h.comm.OpenId, int64(h.req.Index), int64(h.req.Count+1))
 	if err != nil {
 		return err
 	}
@@ -176,7 +174,7 @@ func (h *GetUserMessageHandler) loadMessages() error {
 	return nil
 }
 
-func (h *GetUserMessageHandler) loadData() error {
+func (h *GetSecondHandHandler) loadData() error {
 	wg := util.WaitGroup{}
 	if err := wg.Go(func() error {
 		if err := h.loadMessages(); err != nil {
@@ -203,7 +201,7 @@ func (h *GetUserMessageHandler) loadData() error {
 	return nil
 }
 
-func (h *GetUserMessageHandler) getMessageIds(messages []model.Message) []int64 {
+func (h *GetSecondHandHandler) getMessageIds(messages []model.SecondHand) []int64 {
 	messageIds := make([]int64, 0, len(messages))
 	for _, mess := range messages {
 		messageIds = append(messageIds, mess.MessageId)
@@ -211,7 +209,7 @@ func (h *GetUserMessageHandler) getMessageIds(messages []model.Message) []int64 
 	return messageIds
 }
 
-func (h *GetUserMessageHandler) loadDiggCount() error {
+func (h *GetSecondHandHandler) loadDiggCount() error {
 	messageIDs := h.getMessageIds(h.messages)
 	diggCount, err := db.MGetDiggCount(messageIDs)
 	if err != nil {

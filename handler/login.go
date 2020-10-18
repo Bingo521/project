@@ -26,6 +26,9 @@ func (h *Login) Execute(ctx *gin.Context) *login.LoginResponse {
 	code := ctx.PostForm("code")
 	logs.Info("code = %v", code)
 	wxLoginResp := h.save(code)
+	if wxLoginResp.StatusCode != 0 {
+		return wxLoginResp
+	}
 	userInfo, err := db.GetUserInfo(wxLoginResp.Openid)
 	if err != nil {
 		logs.Warn("[Login] code = %v err:%v", code, err)
@@ -70,7 +73,6 @@ func (h *Login) save(code string) *login.LoginResponse {
 		return h.MakeResp(error_code.ERR_LOGIN, "wx resp err", "", "")
 	}
 	logs.Info("body = %s", string(body))
-
 	err = json.Unmarshal(body, &wxLoginResp)
 	if err != nil {
 		logs.Error(fmt.Sprintf("login wx resp = %v ,err = %v", string(body), err))
@@ -85,7 +87,7 @@ func (h *Login) save(code string) *login.LoginResponse {
 		logs.Warn(fmt.Sprintf("saveSession err = %v", err))
 		return h.MakeResp(error_code.ERR_LOGIN, "redis err", "", "")
 	}
-	return nil
+	return h.MakeResp(error_code.ERR_SUCCESS, error_code.SYS_MESSAGE_SUCCESS, wxLoginResp.OpenId, wxLoginResp.SessionKey)
 }
 
 func (h *Login) MakeResp(statusCode int32, message string, openId string, sessionKey string) *login.LoginResponse {

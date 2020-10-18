@@ -11,7 +11,6 @@ func Get(key string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	logs.Info("Get %v", resp)
 	str, ok := resp.([]byte)
 	if !ok {
 		logs.Error("resp = %v is not string type!", resp)

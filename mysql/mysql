@@ -1,61 +1,128 @@
 create table school(
-id int AUTO_INCREMENT,
-school_name VARCHAR(100),
-PRIMARY KEY ( `id` ),
+    id int AUTO_INCREMENT,
+    school_name VARCHAR(100),
+    PRIMARY KEY ( `id` )
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 insert into school values(NULL,"亳州学院");
 
 create table class_record(
-open_id varchar(50),
-school_name varchar(100),
-week int,
-time bigint,
-class TEXT
+    open_id varchar(50),
+    school_name varchar(100),
+    week int,
+    time bigint,
+    class TEXT
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 create table user(
-open_id  varchar(50),
-cur_school_name varchar(100),
-phone_num varchar(13),
-wx_num varchar(50),
-name varchar(50),
-sex int,
-extra text,
-primary key(open_id),
-key `idx_school` (`open_id`,`cur_school_name`)
+    open_id  varchar(50),
+    cur_school_name varchar(100),
+    phone_num varchar(13),
+    wx_num varchar(50),
+    name varchar(50),
+    sex int,
+    extra text,
+    primary key(open_id),
+    key `idx_school` (`open_id`,`cur_school_name`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 create table stu_school(
-open_id varchar(50),
-school_name varchar(100),
-stu_id varchar(30),
-stu_password varchar(50),
-first_week_date date,
-extra text,
-primary key(`open_id`,`school_name`,`stu_id`),
-key `idx_shcool_stu` (`open_id`,`school_name`,`stu_id`)
+    open_id varchar(50),
+    school_name varchar(100),
+    stu_id varchar(30),
+    stu_password varchar(50),
+    first_week_date date,
+    extra text,
+    primary key(`open_id`,`school_name`,`stu_id`),
+    key `idx_shcool_stu` (`open_id`,`school_name`,`stu_id`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 create table image_uri (
-uri varchar(20),
-type varchar(10),
-extra text,
-primary key(`uri`)
+    uri varchar(20),
+    type varchar(10),
+    extra text,
+    primary key(`uri`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 create table message(
-    message_id int(64),
+    id int PRIMARY KEY AUTO_INCREMENT,
+    message_id BIGINT,
     open_id varchar(50),
     type int,
-    message text,
+    content text,
     image_uris text,
     create_time DATETIME,
     modify_time DATETIME,
     extra text,
-    primary key(`message_id`),
+    digg_count int,
+    comment_count int,
+    key `idx_message_id` (`message_id`),
     key `idx_open_id` (`open_id`),
     key `idx_modify_time`(`modify_time`),
     key `idx_create_time`(`create_time`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+create table comment(
+    id int PRIMARY KEY AUTO_INCREMENT,
+    comment_id BIGINT,
+    message_id BIGINT,
+    open_id varchar(50),
+    type int,
+    content text,
+    image_uris text,
+    create_time DATETIME,
+    modify_time DATETIME,
+    extra text,
+    digg_count int,
+    reply_count int,
+    key `idx_comment_id` (`comment_id`),
+    key `idx_open_id` (`open_id`),
+    key `idx_message_id` (`message_id`),
+    key `idx_modify_time`(`modify_time`),
+    key `idx_create_time`(`create_time`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+create table digg (
+    id int PRIMARY KEY AUTO_INCREMENT,
+    open_id varchar(50),
+    message_id BIGINT,
+    key `idx_open_id` (`open_id`),
+    key `idx_message_id` (`message_id`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `second_hand` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `message_id` BIGINT NOT NULL,
+  `content` varchar(512) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `image_uris` varchar(512) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `open_id` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `extra` text COLLATE utf8mb4_unicode_ci,
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `modify_time` timestamp NULL DEFAULT NULL,
+  `money` int(11) NOT NULL,
+  `category` varchar(64) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `digg_count` int,
+  `reply_count` int,
+    PRIMARY KEY (`id`),
+    key `idx_message_id` (`message_id`),
+    key `idx_open_id` (`open_id`),
+    key `idx_modify_time`(`modify_time`),
+    key `idx_create_time`(`create_time`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE `digg_count` (
+    `id` BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `message_id` BIGINT NOT NULL UNIQUE,
+    `count` BIGINT NOT NULL,
+
+    key `idx_message_id` (`message_id`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE `comment_count` (
+    `id` BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `message_id` BIGINT NOT NULL UNIQUE,
+    `count` BIGINT NOT NULL,
+
+    key `idx_message_id` (`message_id`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

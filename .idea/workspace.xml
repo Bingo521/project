@@ -2,28 +2,36 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="89692903-a79d-4e92-8b88-42721aec7c83" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/handler/get_message_time_line.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/handler/upload_user_info.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dal/db/comment.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dal/db/digg.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dal/db/digg_count.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dal/db/second_hand.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/handler/comment.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/handler/digg.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/handler/get_comment_time_line.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/handler/get_second_hand_time_line.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/handler/get_user_second_hand.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/handler/second_hand.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/model/db_comment.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/model/db_digg.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/model/db_digg_count.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/model/db_second_hand.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/util/wg.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bind.go" beforeDir="false" afterPath="$PROJECT_DIR$/bind.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dal/db/message.go" beforeDir="false" afterPath="$PROJECT_DIR$/dal/db/message.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dal/db/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/dal/db/user.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dal/redis/init.go" beforeDir="false" afterPath="$PROJECT_DIR$/dal/redis/init.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dal/redis/ope.go" beforeDir="false" afterPath="$PROJECT_DIR$/dal/redis/ope.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dal/redis/session.go" beforeDir="false" afterPath="$PROJECT_DIR$/dal/redis/session.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/handler/get_cur_course.go" beforeDir="false" afterPath="$PROJECT_DIR$/handler/get_cur_course.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/handler/get_message_time_line.go" beforeDir="false" afterPath="$PROJECT_DIR$/handler/get_message_time_line.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/handler/get_self_message.go" beforeDir="false" afterPath="$PROJECT_DIR$/handler/get_self_message.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/handler/login.go" beforeDir="false" afterPath="$PROJECT_DIR$/handler/login.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/handler/set_school.go" beforeDir="false" afterPath="$PROJECT_DIR$/handler/set_school.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/logs.go" beforeDir="false" afterPath="$PROJECT_DIR$/logs/logs.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/handler/message.go" beforeDir="false" afterPath="$PROJECT_DIR$/handler/message.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/db_message.go" beforeDir="false" afterPath="$PROJECT_DIR$/model/db_message.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/model/db_user_info.go" beforeDir="false" afterPath="$PROJECT_DIR$/model/db_user_info.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mysql/mysql" beforeDir="false" afterPath="$PROJECT_DIR$/mysql/mysql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/proto_gen/login/login.pb.go" beforeDir="false" afterPath="$PROJECT_DIR$/proto_gen/login/login.pb.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/proto_gen/message/message.pb.go" beforeDir="false" afterPath="$PROJECT_DIR$/proto_gen/message/message.pb.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/proto_gen/upload/upload.pb.go" beforeDir="false" afterPath="$PROJECT_DIR$/proto_gen/upload/upload.pb.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,7 +45,7 @@
       </list>
     </option>
   </component>
-  <component name="GOROOT" path="/usr/local/Cellar/go/1.14/libexec" />
+  <component name="GOROOT" path="/usr/local/Cellar/go/1.15.2/libexec" />
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
@@ -57,6 +65,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="go.gopath.indexing.explicitly.defined" value="true" />
     <property name="go.import.settings.migrated" value="true" />
+    <property name="go.sdk.automatically.set" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
@@ -134,9 +143,9 @@
       <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state x="421" y="205" width="598" height="490" key="find.popup/0.0.1440.900@0.0.1440.900" timestamp="1598767920459" />
-    <state x="385" y="196" width="670" height="676" key="search.everywhere.popup" timestamp="1598767905428">
+    <state x="385" y="196" width="670" height="676" key="search.everywhere.popup" timestamp="1598802617703">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state x="385" y="196" width="670" height="676" key="search.everywhere.popup/0.0.1440.900@0.0.1440.900" timestamp="1598767905428" />
+    <state x="385" y="196" width="670" height="676" key="search.everywhere.popup/0.0.1440.900@0.0.1440.900" timestamp="1598802617703" />
   </component>
 </project>

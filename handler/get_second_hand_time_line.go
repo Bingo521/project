@@ -8,40 +8,40 @@ import (
 	"my_project/error_code"
 	"my_project/logs"
 	"my_project/model"
-	"my_project/proto_gen/message"
+	"my_project/proto_gen/second_hand"
 	"my_project/util"
 	"strconv"
 )
 
-type GetMessageByTimeLine struct {
+type GetSecondHandByTimeLine struct {
 	c             *gin.Context
 	comm          *model.CtxComm
-	r             *message.GetMessageRequest
-	messages      []model.Message
+	r             *second_hand.GetMessageRequest
+	messages      []model.SecondHand
 	userInfo      map[string]*model.UserInfo
 	mid2DiggCount map[int64]int64
 	hasMore       bool
 }
 
-func NewGetMessageByTimeLine(c *gin.Context) *GetMessageByTimeLine {
-	return &GetMessageByTimeLine{
+func NewGetSecondHandByTimeLine(c *gin.Context) *GetSecondHandByTimeLine {
+	return &GetSecondHandByTimeLine{
 		c: c,
 	}
 }
 
-func (h *GetMessageByTimeLine) Handle() *message.GetMessageResponse {
+func (h *GetSecondHandByTimeLine) Handle() *second_hand.GetMessageResponse {
 	req, err := h.makeReq()
 	if err != nil {
-		logs.Warn("[GetMessageByTimeLine] make req err:%v", err)
+		logs.Warn("[GetSecondHandByTimeLine] make req err:%v", err)
 		return h.makeErrResp(error_code.ERR_PARAM_ILLEGAL, error_code.SYS_MESSAGE_PARAM_ILLEGAL)
 	}
 	h.r = req
 	if err := h.check(); err != nil {
-		logs.Warn("[GetMessageByTimeLine] check err:%v", err)
+		logs.Warn("[GetSecondHandByTimeLine] check err:%v", err)
 		return h.makeErrResp(error_code.ERR_PARAM_ILLEGAL, error_code.SYS_MESSAGE_PARAM_ILLEGAL)
 	}
 	if err := h.loadData(); err != nil {
-		logs.Warn("[GetMessageByTimeLine] loadData err:%v", err)
+		logs.Warn("[GetSecondHandByTimeLine] loadData err:%v", err)
 		return h.makeErrResp(error_code.ERR_SERVER_ERR, error_code.SYS_MESSAGE_SERVER_ERR)
 	}
 	respMess := h.transToClientMessage()
@@ -53,30 +53,34 @@ func (h *GetMessageByTimeLine) Handle() *message.GetMessageResponse {
 	return resp
 }
 
-func (h *GetMessageByTimeLine) makeReq() (*message.GetMessageRequest, error) {
+func (h *GetSecondHandByTimeLine) makeReq() (*second_hand.GetMessageRequest, error) {
 	index := h.c.Query("index")
+	count := h.c.Query("count")
+	firstTime := h.c.Query("first_time")
+	category := h.c.Query("category")
+	logs.Info("[GetSecondHandByTimeLine] index = %v,count = %v,firstTime = %v,category = %v", index, count, firstTime, category)
 	iindex, err := strconv.ParseInt(index, 10, 64)
 	if err != nil {
 		return nil, fmt.Errorf("index = %v is illegal", index)
 	}
-	count := h.c.Query("count")
 	icount, err := strconv.ParseInt(count, 10, 64)
 	if err != nil {
 		return nil, fmt.Errorf("count = %v is illegal", count)
 	}
-	firstTime := h.c.Query("first_time")
 	iFirstTime, err := strconv.ParseInt(firstTime, 10, 64)
 	if err != nil {
 		return nil, fmt.Errorf("first_time = %v is illegal", firstTime)
 	}
-	return &message.GetMessageRequest{
+
+	return &second_hand.GetMessageRequest{
 		Index:     int32(iindex),
 		Count:     int32(icount),
 		FirstTime: iFirstTime,
+		Category:  category,
 	}, nil
 }
 
-func (h *GetMessageByTimeLine) check() error {
+func (h *GetSecondHandByTimeLine) check() error {
 	if h.r == nil {
 		return fmt.Errorf("req is nil")
 	}
@@ -86,7 +90,14 @@ func (h *GetMessageByTimeLine) check() error {
 	return nil
 }
 
-func (h *GetMessageByTimeLine) loadData() error {
+func (h *GetSecondHandByTimeLine) makeErrResp(errCode int32, errMessage string) *second_hand.GetMessageResponse {
+	return &second_hand.GetMessageResponse{
+		StatusCode: errCode,
+		Message:    errMessage,
+	}
+}
+
+func (h *GetSecondHandByTimeLine) loadData() error {
 	wg := util.WaitGroup{}
 	if err := wg.Go(func() error {
 		if err := h.loadMessages(); err != nil {
@@ -113,15 +124,8 @@ func (h *GetMessageByTimeLine) loadData() error {
 	return nil
 }
 
-func (h *GetMessageByTimeLine) makeErrResp(errCode int32, errMessage string) *message.GetMessageResponse {
-	return &message.GetMessageResponse{
-		StatusCode: errCode,
-		Message:    errMessage,
-	}
-}
-
-func (h *GetMessageByTimeLine) transToClientMessage() []*message.MessageInfo {
-	messageInfos := make([]*message.MessageInfo, 0, len(h.messages))
+func (h *GetSecondHandByTimeLine) transToClientMessage() []*second_hand.SecondHandInfo {
+	messageInfos := make([]*second_hand.SecondHandInfo, 0, len(h.messages))
 	for _, messageItem := range h.messages {
 		var uris []string
 		if err := json.Unmarshal([]byte(messageItem.ImageUris), &uris); err != nil {
@@ -130,17 +134,18 @@ func (h *GetMessageByTimeLine) transToClientMessage() []*message.MessageInfo {
 		}
 		userInfo, find := h.userInfo[messageItem.OpenId]
 		if !find {
-			logs.Warn("[GetMessageByTimeLine] transToClientMessage openId = %v not find UserInfo", messageItem.OpenId)
+			logs.Warn("[GetSecondHandByTimeLine] transToClientMessage openId = %v not find UserInfo", messageItem.OpenId)
 			continue
 		}
-		messageInfo := &message.MessageInfo{
-			MessageId:   messageItem.MessageId,
-			Content:     messageItem.Content,
-			Urls:        uris,
-			MessageType: messageItem.Type,
-			CreateTime:  messageItem.CreateTime.Unix(),
+		messageInfo := &second_hand.SecondHandInfo{
+			MessageId:  messageItem.MessageId,
+			Content:    messageItem.Content,
+			Urls:       uris,
+			CreateTime: messageItem.CreateTime.Unix(),
+			Price:      messageItem.Money,
+			Category:   messageItem.Category,
 		}
-		clientUserInfo := &message.MessageUserInfo{
+		clientUserInfo := &second_hand.SecondHandUserInfo{
 			OpenId: userInfo.OpenId,
 		}
 		if userInfo.ProfilePhoto != nil {
@@ -159,7 +164,7 @@ func (h *GetMessageByTimeLine) transToClientMessage() []*message.MessageInfo {
 	return messageInfos
 }
 
-func (h *GetMessageByTimeLine) GetOpenIDs(messages []model.Message) []string {
+func (h *GetSecondHandByTimeLine) GetOpenIDs(messages []model.SecondHand) []string {
 	opendIds := make([]string, 0, len(messages))
 	for _, mess := range messages {
 		opendIds = append(opendIds, mess.OpenId)
@@ -167,15 +172,7 @@ func (h *GetMessageByTimeLine) GetOpenIDs(messages []model.Message) []string {
 	return opendIds
 }
 
-func (h *GetMessageByTimeLine) getMessageIds(messages []model.Message) []int64 {
-	messageIds := make([]int64, 0, len(messages))
-	for _, mess := range messages {
-		messageIds = append(messageIds, mess.MessageId)
-	}
-	return messageIds
-}
-
-func (h *GetMessageByTimeLine) loadUserInfo() error {
+func (h *GetSecondHandByTimeLine) loadUserInfo() error {
 	openIDs := h.GetOpenIDs(h.messages)
 	userInfo, err := db.MGetUserInfo(openIDs)
 	if err != nil {
@@ -185,8 +182,16 @@ func (h *GetMessageByTimeLine) loadUserInfo() error {
 	return nil
 }
 
-func (h *GetMessageByTimeLine) loadMessages() error {
-	messages, err := db.GetMessageTimeLine(h.r.FirstTime, h.r.Index, h.r.Count+1)
+func (h *GetSecondHandByTimeLine) loadMessages() error {
+	var (
+		messages []model.SecondHand
+		err      error
+	)
+	if h.r.Category == "" {
+		messages, err = db.GetSecondHandTimeLine(h.r.FirstTime, h.r.Index, h.r.Count+1)
+	} else {
+		messages, err = db.GetSecondHandTimeLineByCategory(h.r.FirstTime, h.r.Index, h.r.Count+1, h.r.Category)
+	}
 	if err != nil {
 		return err
 	}
@@ -201,7 +206,15 @@ func (h *GetMessageByTimeLine) loadMessages() error {
 	return nil
 }
 
-func (h *GetMessageByTimeLine) loadDiggCount() error {
+func (h *GetSecondHandByTimeLine) getMessageIds(messages []model.SecondHand) []int64 {
+	messageIds := make([]int64, 0, len(messages))
+	for _, mess := range messages {
+		messageIds = append(messageIds, mess.MessageId)
+	}
+	return messageIds
+}
+
+func (h *GetSecondHandByTimeLine) loadDiggCount() error {
 	messageIDs := h.getMessageIds(h.messages)
 	diggCount, err := db.MGetDiggCount(messageIDs)
 	if err != nil {

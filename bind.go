@@ -77,6 +77,34 @@ var funcArr = []*Handler{
 		Type: POST,
 		Path: "/upload/user_info",
 		Func: UploadUserInfo,
+	}, &Handler{
+		Type: POST,
+		Path: "/create/second_hand",
+		Func: CreateSecondHand,
+	}, &Handler{
+		Type: GET,
+		Path: "/get/user/second_hand",
+		Func: GetUserSecondHand,
+	}, &Handler{
+		Type: GET,
+		Path: "/get/second_hand/time_line",
+		Func: GetSecondHandTimeLine,
+	}, &Handler{
+		Type: GET,
+		Path: "/get/second_hand/hot",
+		Func: GetSecondHandTimeLine,
+	}, &Handler{
+		Path: "/create/comment",
+		Type: POST,
+		Func: CreateComment,
+	}, &Handler{
+		Path: "/get/comment",
+		Type: GET,
+		Func: GetComments,
+	}, &Handler{
+		Path: "/digg",
+		Type: POST,
+		Func: Digg,
 	},
 }
 
@@ -154,4 +182,34 @@ func UploadUserInfo(c *gin.Context) {
 func GetMessageByTimeLine(c *gin.Context) {
 	h := handler.NewGetMessageByTimeLine(c)
 	c.JSON(200, h.Handle())
+}
+
+func CreateSecondHand(c *gin.Context) {
+	h := handler.NewSecondHandHandler(c)
+	c.JSON(200, h.Execute())
+}
+
+func GetUserSecondHand(c *gin.Context) {
+	h := handler.NewGetSecondHandHandler(c)
+	c.JSON(200, h.Execute())
+}
+
+func GetSecondHandTimeLine(c *gin.Context) {
+	h := handler.NewGetSecondHandByTimeLine(c)
+	c.JSON(200, h.Handle())
+}
+
+func GetComments(c *gin.Context) {
+	h := handler.NewGetCommentTimeLineHandler(c)
+	c.JSON(200, h.Execute())
+}
+
+func CreateComment(c *gin.Context) {
+	h := handler.NewCommentHandler(c)
+	c.JSON(200, h.Execute())
+}
+
+func Digg(c *gin.Context) {
+	h := handler.NewDiggHandler(c)
+	c.JSON(200, h.Execute())
 }

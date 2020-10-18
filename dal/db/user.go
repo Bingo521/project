@@ -3,6 +3,7 @@ package db
 import (
 	"fmt"
 	"github.com/jinzhu/gorm"
+	jsoniter "github.com/json-iterator/go"
 	"my_project/logs"
 	"my_project/model"
 )
@@ -73,9 +74,17 @@ func SetUserInfo(userInfo *model.UserInfo) error {
 		return err
 	}
 	if oldUserInfo != nil {
-		logs.Info("[SetUserInfo] update")
-		return db.Model(model.UserInfo{}).Updates(userInfo).Error
+		strJson, err := jsoniter.MarshalToString(userInfo)
+		if err != nil {
+			return err
+		}
+		var userInfoMap map[string]interface{}
+		err = jsoniter.UnmarshalFromString(strJson, &userInfoMap)
+		if err != nil {
+			return err
+		}
+		delete(userInfoMap, "open_id")
+		return db.Model(&model.UserInfo{}).LogMode(true).Where("open_id = ?", userInfo.OpenId).Updates(userInfoMap).Error
 	}
-	logs.Info("[SetUserInfo] insert")
-	return db.Model(model.UserInfo{}).Save(userInfo).Error
+	return db.Model(&model.UserInfo{}).Save(userInfo).Error
 }
