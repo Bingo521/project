@@ -2,6 +2,7 @@ package db
 
 import (
 	"encoding/json"
+	"github.com/jinzhu/gorm"
 	"my_project/model"
 	"time"
 )
@@ -34,6 +35,17 @@ func GetSecondHandByOpenId(openId string, index int64, count int64) ([]model.Sec
 		return []model.SecondHand{}, err
 	}
 	return messages, nil
+}
+
+func GetSecondHandByMessageId(messageID int64) (*model.SecondHand, error) {
+	messageInfo := model.SecondHand{}
+	if err := db.Model(&model.SecondHand{}).Where("message_id = ?", messageID).First(&messageInfo).Error; err != nil {
+		if err == gorm.ErrRecordNotFound {
+			return nil, nil
+		}
+		return nil, err
+	}
+	return &messageInfo, nil
 }
 
 func GetSecondHandTimeLine(firstTime int64, index int32, count int32) ([]model.SecondHand, error) {

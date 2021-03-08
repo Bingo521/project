@@ -18,7 +18,7 @@ type DeleteSecondHandHandler struct {
 	req  *second_hand.DeleteSecondHandRequest
 	comm *model.CtxComm
 
-	messageInfo *model.Message
+	messageInfo *model.SecondHand
 }
 
 func NewDeleteSecondHandHandler(c *gin.Context) *DeleteSecondHandHandler {
@@ -77,7 +77,7 @@ func (h *DeleteSecondHandHandler) check() error {
 }
 
 func (h *DeleteSecondHandHandler) loadData() error {
-	messageInfo, err := db.GetMessageByMessageId(h.req.MessageId)
+	messageInfo, err := db.GetSecondHandByMessageId(h.req.MessageId)
 	if err != nil {
 		return err
 	}

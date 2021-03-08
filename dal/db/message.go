@@ -66,3 +66,14 @@ func GetMessageByMessageId(messageID int64) (*model.Message, error) {
 func DeleteMessageByMessageId(messageID int64) error {
 	return db.Model(&model.Message{}).Where("message_id = ?", messageID).Delete(model.Message{}).Error
 }
+
+func GetCommentByCommentId(commentID int64) (*model.Comment, error) {
+	commentInfo := model.Comment{}
+	if err := db.Model(&model.Comment{}).Where("comment_id = ?", commentID).First(&commentInfo).Error; err != nil {
+		if err == gorm.ErrRecordNotFound {
+			return nil, nil
+		}
+		return nil, err
+	}
+	return &commentInfo, nil
+}

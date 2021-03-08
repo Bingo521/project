@@ -2,15 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="89692903-a79d-4e92-8b88-42721aec7c83" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/handler/delete_message.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dal/db/message.go" beforeDir="false" afterPath="$PROJECT_DIR$/dal/db/message.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dal/db/second_hand.go" beforeDir="false" afterPath="$PROJECT_DIR$/dal/db/second_hand.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/handler/message.go" beforeDir="false" afterPath="$PROJECT_DIR$/handler/message.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/handler/second_hand.go" beforeDir="false" afterPath="$PROJECT_DIR$/handler/second_hand.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/db_second_hand.go" beforeDir="false" afterPath="$PROJECT_DIR$/model/db_second_hand.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/proto_gen/comment/comment.pb.go" beforeDir="false" afterPath="$PROJECT_DIR$/proto_gen/comment/comment.pb.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/proto_gen/message/message.pb.go" beforeDir="false" afterPath="$PROJECT_DIR$/proto_gen/message/message.pb.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/proto_gen/second_hand/second_hand.pb.go" beforeDir="false" afterPath="$PROJECT_DIR$/proto_gen/second_hand/second_hand.pb.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/handler/delete_comment.go" beforeDir="false" afterPath="$PROJECT_DIR$/handler/delete_comment.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/handler/delete_second_hand.go" beforeDir="false" afterPath="$PROJECT_DIR$/handler/delete_second_hand.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

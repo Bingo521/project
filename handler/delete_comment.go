@@ -18,7 +18,7 @@ type DeleteCommentHandler struct {
 	req  *comment.DeleteCommentRequest
 	comm *model.CtxComm
 
-	messageInfo *model.Message
+	messageInfo *model.Comment
 }
 
 func NewDeleteCommentHandler(c *gin.Context) *DeleteCommentHandler {
@@ -57,8 +57,8 @@ func (h *DeleteCommentHandler) makeReq() error {
 		return errors.New("comm info nil")
 	}
 	h.comm = comm
-	strMessageID := h.c.PostForm("message_id")
-	logs.Info("[DeleteMessageHandler] message_id = %v", strMessageID)
+	strMessageID := h.c.PostForm("comment_id")
+	logs.Info("[DeleteMessageHandler] comment_id = %v", strMessageID)
 	messageID, err := strconv.ParseInt(strMessageID, 10, 64)
 	if err != nil {
 		return err
@@ -77,7 +77,7 @@ func (h *DeleteCommentHandler) check() error {
 }
 
 func (h *DeleteCommentHandler) loadData() error {
-	messageInfo, err := db.GetMessageByMessageId(h.req.CommentId)
+	messageInfo, err := db.GetCommentByCommentId(h.req.CommentId)
 	if err != nil {
 		return err
 	}
